@@ -1,4 +1,4 @@
-# Dental Office Operations Assistant — Databricks Hands-On Workshop
+# Healthcare Revenue Cycle Assistant — Databricks
 
 An end-to-end AI assistant for a **multi-location dental practice**, built on Databricks in six hands-on projects.
 
