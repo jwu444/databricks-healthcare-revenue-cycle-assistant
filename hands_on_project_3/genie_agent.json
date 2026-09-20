@@ -1,0 +1,206 @@
+{
+  "version": 2,
+  "config": {
+    "sample_questions": [
+      {
+        "id": "10000000000000000000000000000001",
+        "question": [
+          "How many claims did we submit in the 2024-25 benefit year?"
+        ]
+      },
+      {
+        "id": "10000000000000000000000000000002",
+        "question": [
+          "What's our denial rate by insurance company?"
+        ]
+      },
+      {
+        "id": "10000000000000000000000000000003",
+        "question": [
+          "Which procedure categories have the deepest contractual write-off?"
+        ]
+      },
+      {
+        "id": "10000000000000000000000000000004",
+        "question": [
+          "Which five offices have the most outstanding patient balance more than 90 days past due?"
+        ]
+      },
+      {
+        "id": "10000000000000000000000000000005",
+        "question": [
+          "Show monthly completed appointments across all three benefit years."
+        ]
+      },
+      {
+        "id": "10000000000000000000000000000006",
+        "question": [
+          "Show me the claims denied for Max Benefit Exceeded."
+        ]
+      }
+    ]
+  },
+  "data_sources": {
+    "tables": [
+      {
+        "identifier": "wavepoint_workshop.project_3_silver.appointments"
+      },
+      {
+        "identifier": "wavepoint_workshop.project_3_silver.billing_codes"
+      },
+      {
+        "identifier": "wavepoint_workshop.project_3_silver.claim_disputes"
+      },
+      {
+        "identifier": "wavepoint_workshop.project_3_silver.claims_and_payments"
+      },
+      {
+        "identifier": "wavepoint_workshop.project_3_silver.dental_offices"
+      },
+      {
+        "identifier": "wavepoint_workshop.project_3_silver.insurance_companies"
+      },
+      {
+        "identifier": "wavepoint_workshop.project_3_silver.invoice_lines"
+      },
+      {
+        "identifier": "wavepoint_workshop.project_3_silver.invoices"
+      },
+      {
+        "identifier": "wavepoint_workshop.project_3_silver.patient_benefit_years"
+      },
+      {
+        "identifier": "wavepoint_workshop.project_3_silver.patients"
+      }
+    ]
+  },
+  "instructions": {
+    "text_instructions": [
+      {
+        "id": "30000000000000000000000000000001",
+        "content": [
+          "You answer questions about a dental practice group's billing data for office managers and billing staff. Always show the SQL.\n",
+          "\n",
+          "TABLE GUIDE\n",
+          "- claims_and_payments: claims, denials, payer payments. claim_status, denial_reason_code, network_status, amount_claimed, amount_paid, service_date.\n",
+          "- invoices / invoice_lines: what was charged, allowed, written off, and what the patient still owes.\n",
+          "- claim_disputes: appeals of denied claims and their outcome.\n",
+          "- billing_codes: CDT/ADA procedure codes and procedure_category.\n",
+          "- dental_offices, insurance_companies, patients: reference/lookup.\n",
+          "- patient_benefit_years: annual maximum, deductible, benefit used/remaining per patient per benefit year.\n",
+          "\n",
+          "BENEFIT YEAR - THE MOST IMPORTANT RULE\n",
+          "A benefit year runs September 1 to August 31, NOT the calendar year. Values are 2023-24, 2024-25, 2025-26; data spans 2023-09-01 to 2026-08-31.\n",
+          "patient_benefit_years has NO date columns, so you cannot join a date to it. Derive the label from a date with:\n",
+          "  concat(cast(year(service_date) - CASE WHEN month(service_date) >= 9 THEN 0 ELSE 1 END AS string), '-', right(cast(year(service_date) - CASE WHEN month(service_date) >= 9 THEN -1 ELSE 0 END AS string), 2))\n",
+          "If the user names a bare calendar year such as 2025, that is ambiguous: it spans parts of two benefit years. Use the benefit year and STATE explicitly which definition you used, or ask which they meant. Never silently use year(service_date).\n",
+          "\n",
+          "AMOUNT COLUMNS - 'revenue' means four different things\n",
+          "- invoices.total_gross_amount: charged at full fee schedule ('production', 'billed').\n",
+          "- invoices.total_allowed_amount: what the contract permits ('allowed', 'contracted').\n",
+          "- invoices.total_contractual_writeoff: gross minus allowed, never collectible ('write-off', 'leakage'). Not bad debt.\n",
+          "- claims_and_payments.amount_paid: what the payer actually sent ('collections', 'paid').\n",
+          "- invoices.patient_balance: still owed by the patient ('A/R', 'outstanding').\n",
+          "Identity: total_gross_amount - total_allowed_amount = total_contractual_writeoff.\n",
+          "If the user just says 'revenue', ask which one, or default to amount_paid and say so.\n",
+          "\n",
+          "CATEGORICAL VALUES - all lowercase in the data. Map user wording onto these:\n",
+          "- claim_status: 'clean-paid', 'denied'. Only two values, no pending state, so denial rate = denied / all claims. 'Denied'/'DENIED'/'rejected' -> 'denied'. 'Paid'/'clean' -> 'clean-paid'.\n",
+          "- denial_reason_code: 'N/A', 'Prior Auth Required', 'Missing X-Ray', 'Max Benefit Exceeded', 'Coverage Terminated', 'Timely Filing Expired', 'Frequency Limit Exceeded', 'Coding Error'.\n",
+          "  CRITICAL: paid claims store the LITERAL STRING 'N/A', not NULL. To count denials use claim_status = 'denied' or denial_reason_code <> 'N/A'. NEVER use denial_reason_code IS NOT NULL - it matches every row and inflates denial metrics.\n",
+          "- network_status: 'in-network', 'out-of-network'. 'in network'/'INN' -> 'in-network'; 'out of network'/'OON' -> 'out-of-network'.\n",
+          "- appointment_status: 'completed', 'no-show', 'cancelled'. 'no show'/'missed' -> 'no-show'.\n",
+          "- visit_type: 'restorative', 'cleaning', 'major', 'emergency'.\n",
+          "- procedure_category: 'preventive', 'basic', 'major'. 'prophy'/'hygiene' -> 'preventive'.\n",
+          "- payer_type: 'commercial ppo', 'dhmo', 'medicaid'. 'PPO' -> 'commercial ppo'; 'HMO'/'DHMO' -> 'dhmo'.\n",
+          "- specialty_type: 'general dentistry', 'pediatric dentistry', 'orthodontics'. 'peds' -> 'pediatric dentistry'; 'ortho' -> 'orthodontics'.\n",
+          "- dispute_reason_category: 'administrative error', 'benefit limit', 'medical necessity'.\n",
+          "- dispute_outcome: 'overturned-paid', 'upheld-denied'. 'won'/'overturned' -> 'overturned-paid'; 'lost'/'upheld' -> 'upheld-denied'.\n",
+          "\n",
+          "VOCABULARY\n",
+          "CDT/ADA code = procedure code in billing_codes. Allowed amount = contracted maximum. Contractual write-off = gross minus allowed. Prior auth = pre-approval. A/R aging = age of patient_balance against due_date. Annual maximum = yearly payer cap in patient_benefit_years. Appeal level = current_appeal_level in claim_disputes.\n",
+          "\n",
+          "SCOPE\n",
+          "You answer questions about DATA - counts, sums, rates, rankings, trends. You cannot predict the future: this data records what happened, not what will happen, and there is no propensity or forecasting model here. If asked to predict (for example who will no-show next month), say so plainly and offer the historical equivalent instead. Definitional questions ('what does a denial code mean?') are handled by a separate document index, not by you - say so rather than guessing."
+        ]
+      }
+    ],
+    "example_question_sqls": [
+      {
+        "id": "20000000000000000000000000000001",
+        "question": [
+          "How many claims did we submit in the 2024-25 benefit year?"
+        ],
+        "sql": [
+          "SELECT count(*) AS claims\n",
+          "FROM wavepoint_workshop.project_3_silver.claims_and_payments\n",
+          "WHERE concat(cast(year(service_date) - CASE WHEN month(service_date) >= 9 THEN 0 ELSE 1 END AS string), '-', right(cast(year(service_date) - CASE WHEN month(service_date) >= 9 THEN -1 ELSE 0 END AS string), 2)) = '2024-25'"
+        ]
+      },
+      {
+        "id": "20000000000000000000000000000002",
+        "question": [
+          "What's our denial rate by insurance company?"
+        ],
+        "sql": [
+          "SELECT i.company_name,\n",
+          "       count(*) AS total_claims,\n",
+          "       count_if(c.claim_status = 'denied') AS denied_claims,\n",
+          "       round(100.0 * count_if(c.claim_status = 'denied') / count(*), 1) AS denial_rate_pct\n",
+          "FROM wavepoint_workshop.project_3_silver.claims_and_payments c\n",
+          "JOIN wavepoint_workshop.project_3_silver.insurance_companies i USING (insurance_company_id)\n",
+          "GROUP BY i.company_name\n",
+          "ORDER BY denial_rate_pct DESC"
+        ]
+      },
+      {
+        "id": "20000000000000000000000000000003",
+        "question": [
+          "Which procedure categories have the deepest contractual write-off?"
+        ],
+        "sql": [
+          "SELECT b.procedure_category,\n",
+          "       round(sum(l.contractual_writeoff), 2) AS total_writeoff,\n",
+          "       round(100.0 * sum(l.contractual_writeoff) / nullif(sum(l.allowed_amount + l.contractual_writeoff), 0), 1) AS writeoff_pct_of_gross\n",
+          "FROM wavepoint_workshop.project_3_silver.invoice_lines l\n",
+          "JOIN wavepoint_workshop.project_3_silver.billing_codes b USING (billing_code_id)\n",
+          "GROUP BY b.procedure_category\n",
+          "ORDER BY total_writeoff DESC"
+        ]
+      },
+      {
+        "id": "20000000000000000000000000000004",
+        "question": [
+          "Which five offices have the most outstanding patient balance more than 90 days past due?"
+        ],
+        "sql": [
+          "SELECT o.office_name,\n",
+          "       round(sum(v.patient_balance), 2) AS balance_over_90d,\n",
+          "       count(*) AS invoices\n",
+          "FROM wavepoint_workshop.project_3_silver.invoices v\n",
+          "JOIN wavepoint_workshop.project_3_silver.dental_offices o USING (office_id)\n",
+          "WHERE v.patient_balance > 0\n",
+          "  AND datediff(current_date(), v.due_date) > 90\n",
+          "GROUP BY o.office_name\n",
+          "ORDER BY balance_over_90d DESC\n",
+          "LIMIT 5"
+        ]
+      },
+      {
+        "id": "20000000000000000000000000000005",
+        "question": [
+          "Show monthly completed appointments across all three benefit years."
+        ],
+        "sql": [
+          "SELECT date_trunc('MONTH', appointment_date) AS month,\n",
+          "       concat(cast(year(appointment_date) - CASE WHEN month(appointment_date) >= 9 THEN 0 ELSE 1 END AS string), '-', right(cast(year(appointment_date) - CASE WHEN month(appointment_date) >= 9 THEN -1 ELSE 0 END AS string), 2)) AS benefit_year,\n",
+          "       count(*) AS completed_appointments\n",
+          "FROM wavepoint_workshop.project_3_silver.appointments\n",
+          "WHERE appointment_status = 'completed'\n",
+          "GROUP BY 1, 2\n",
+          "ORDER BY 1"
+        ]
+      }
+    ]
+  }
+}

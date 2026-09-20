@@ -1,0 +1,36 @@
+policy_id,insurance_company_id,policy_group_number,group_name,individual_deductible_per_year,family_deductible_per_year,annual_maximum_benefit,waiting_period_months_major,effective_date
+1,4,GRP-39451,Lee-Davis,50.0,150.0,1000.0,6,2022-10-31
+2,9,GRP-40161,Jenkins-Shields,50.0,150.0,1500.0,0,2020-12-11
+3,1,GRP-40007,"Joyce, Garcia and Powell",50.0,150.0,1000.0,0,2022-05-16
+4,2,GRP-77391,Wright and Sons,100.0,300.0,1500.0,6,2023-05-11
+5,4,GRP-80678,Henderson LLC,150.0,450.0,1500.0,12,2022-12-27
+6,8,GRP-63354,Ramos PLC,75.0,225.0,1500.0,0,2021-03-01
+7,7,GRP-56438,"Kidd, Huff and Novak",50.0,150.0,2500.0,12,2025-04-22
+8,1,GRP-98259,Martin Group,150.0,450.0,1000.0,0,2023-01-30
+9,6,GRP-24322,Barrera-Martin,150.0,450.0,1500.0,0,2020-09-07
+10,9,GRP-68800,Baker-Bowers,75.0,225.0,1500.0,12,2022-12-13
+11,5,GRP-70637,Horton-Cross,75.0,225.0,1500.0,0,2024-08-04
+12,9,GRP-22833,"Higgins, Moore and Phillips",150.0,450.0,1000.0,0,2025-07-08
+13,4,GRP-31798,"Fitzgerald, Brown and Edwards",50.0,150.0,2500.0,12,2020-12-04
+14,4,GRP-62565,Shaw-Farrell,150.0,450.0,1000.0,0,2021-06-18
+15,1,GRP-61173,"Miller, Lopez and Larson",150.0,450.0,2000.0,12,2024-01-19
+16,7,GRP-82845,Powell PLC,100.0,300.0,2500.0,0,2021-11-27
+17,5,GRP-38534,"Williams, Miller and Sandoval",75.0,225.0,1000.0,0,2023-07-03
+18,1,GRP-16572,Donovan-Harris,100.0,300.0,2500.0,0,2024-04-03
+19,9,GRP-20500,Baker and Sons,50.0,150.0,1500.0,0,2024-01-13
+20,4,GRP-62923,Bryant-Hickman,50.0,150.0,1000.0,0,2025-05-09
+21,2,GRP-64948,Ellis PLC,50.0,150.0,2000.0,6,2025-08-27
+22,6,GRP-41285,Medina PLC,75.0,225.0,2000.0,12,2022-01-01
+23,5,GRP-69929,Ibarra-Suarez,75.0,225.0,2000.0,0,2022-07-10
+24,8,GRP-91416,Kim PLC,50.0,150.0,1000.0,0,2024-03-11
+25,9,GRP-44760,"Riggs, Roman and Rice",75.0,225.0,1500.0,6,2024-01-06
+26,4,GRP-58434,"Evans, Alvarado and Mcmillan",50.0,150.0,2000.0,0,2021-05-07
+27,9,GRP-49651,Preston Ltd,150.0,450.0,1000.0,6,2023-06-11
+28,3,GRP-44664,Campbell-Clark,50.0,150.0,1000.0,0,2022-05-23
+29,5,GRP-46930,"Walters, Baker and Freeman",75.0,225.0,1500.0,6,2025-03-15
+30,5,GRP-76244,Davis Group,75.0,225.0,2500.0,6,2024-10-27
+31,2,GRP-93136,Smith and Sons,50.0,150.0,2500.0,6,2023-11-11
+32,1,GRP-53719,Martin-Ramos,50.0,150.0,1500.0,6,2024-03-15
+33,8,GRP-82309,"Smith, Jones and Ware",75.0,225.0,2500.0,0,2025-03-12
+34,2,GRP-29536,"Johnson, Wood and Tran",50.0,150.0,1000.0,6,2022-10-28
+35,7,GRP-26704,Parker Inc,75.0,225.0,1000.0,6,2025-03-03

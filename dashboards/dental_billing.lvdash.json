@@ -1,0 +1,3132 @@
+{
+  "datasets": [
+    {
+      "name": "denial_reasons",
+      "displayName": "Denial Reasons (Silver)",
+      "queryLines": [
+        "SELECT\n",
+        "  denial_reason_code,\n",
+        "  COUNT(*) AS denial_count\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_silver.claims_and_payments\n",
+        "WHERE\n",
+        "  claim_status = 'denied'\n",
+        "GROUP BY\n",
+        "  denial_reason_code\n",
+        "ORDER BY\n",
+        "  denial_count DESC"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "monthly_financials",
+      "displayName": "Monthly Financials (Gold)",
+      "queryLines": [
+        "SELECT\n",
+        "  month AS service_month,\n",
+        "  net_revenue AS revenue,\n",
+        "  outstanding_patient_balance AS patient_balance\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_gold.gold_monthly_revenue\n",
+        "ORDER BY\n",
+        "  service_month"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "claims_status",
+      "displayName": "Claims Status (Silver)",
+      "queryLines": [
+        "SELECT\n",
+        "  claim_status,\n",
+        "  COUNT(*) AS claim_count,\n",
+        "  SUM(amount_claimed) AS total_claimed,\n",
+        "  SUM(amount_paid) AS total_paid\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_silver.claims_and_payments\n",
+        "GROUP BY\n",
+        "  claim_status\n",
+        "ORDER BY\n",
+        "  claim_count DESC"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "appt_status",
+      "displayName": "Appointment Status (Silver)",
+      "queryLines": [
+        "SELECT\n",
+        "  appointment_status,\n",
+        "  COUNT(*) AS appointment_count\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_silver.appointments\n",
+        "GROUP BY\n",
+        "  appointment_status\n",
+        "ORDER BY\n",
+        "  appointment_count DESC"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "denial_analysis",
+      "displayName": "Denial Analysis by Payer (Gold)",
+      "queryLines": [
+        "SELECT\n",
+        "  company_name,\n",
+        "  total_claims,\n",
+        "  denied_claims,\n",
+        "  actual_denial_rate_pct AS denial_rate,\n",
+        "  avg_days_to_adjudicate,\n",
+        "  total_claimed,\n",
+        "  total_paid\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_gold.gold_payer_performance\n",
+        "ORDER BY\n",
+        "  denial_rate DESC"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "dispute_outcomes",
+      "displayName": "Dispute Outcomes (Silver)",
+      "queryLines": [
+        "SELECT\n",
+        "  dispute_outcome,\n",
+        "  dispute_reason_category,\n",
+        "  COUNT(*) AS dispute_count,\n",
+        "  SUM(amount_recovered) AS total_recovered\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_silver.claim_disputes\n",
+        "GROUP BY\n",
+        "  dispute_outcome,\n",
+        "  dispute_reason_category\n",
+        "ORDER BY\n",
+        "  dispute_count DESC"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "overview_kpis",
+      "displayName": "Overview KPIs (Gold)",
+      "queryLines": [
+        "SELECT\n",
+        "  total_patients,\n",
+        "  total_appointments,\n",
+        "  total_claims,\n",
+        "  total_revenue,\n",
+        "  denial_rate_pct AS denial_rate,\n",
+        "  no_show_rate_pct AS no_show_rate\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_gold.gold_kpi_summary"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "network_comparison",
+      "displayName": "Network Comparison (Silver)",
+      "queryLines": [
+        "SELECT\n",
+        "  network_status,\n",
+        "  COUNT(*) AS claim_count,\n",
+        "  SUM(amount_claimed) AS total_claimed,\n",
+        "  SUM(amount_paid) AS total_paid,\n",
+        "  ROUND(AVG(days_to_adjudicate), 1) AS avg_days\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_silver.claims_and_payments\n",
+        "GROUP BY\n",
+        "  network_status"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "appts_by_office",
+      "displayName": "Appointments by Office (Gold)",
+      "queryLines": [
+        "SELECT\n",
+        "  office_name,\n",
+        "  total_appointments,\n",
+        "  no_show_count AS no_show,\n",
+        "  cancelled_count AS cancelled,\n",
+        "  no_show_rate_pct,\n",
+        "  total_revenue,\n",
+        "  denial_rate_pct\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_gold.gold_office_performance\n",
+        "ORDER BY\n",
+        "  total_appointments DESC"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "visit_type",
+      "displayName": "Visit Type Distribution (Gold)",
+      "queryLines": [
+        "SELECT\n",
+        "  visit_type,\n",
+        "  SUM(total_appointments) AS visit_count\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_gold.gold_appointment_analytics\n",
+        "GROUP BY\n",
+        "  visit_type\n",
+        "ORDER BY\n",
+        "  visit_count DESC"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "revenue_by_category",
+      "displayName": "Revenue by Procedure (Gold)",
+      "queryLines": [
+        "SELECT\n",
+        "  procedure_category,\n",
+        "  SUM(total_allowed) AS total_allowed,\n",
+        "  SUM(insurance_portion) AS insurance_amount,\n",
+        "  SUM(patient_portion) AS patient_amount,\n",
+        "  SUM(line_count) AS line_count\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_gold.gold_revenue_by_procedure\n",
+        "GROUP BY\n",
+        "  procedure_category\n",
+        "ORDER BY\n",
+        "  total_allowed DESC"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "recall_effectiveness",
+      "displayName": "Recall Effectiveness (Gold)",
+      "queryLines": [
+        "SELECT\n",
+        "  recall_type,\n",
+        "  SUM(total_sent) AS total_sent,\n",
+        "  SUM(appointments_created) AS resulted,\n",
+        "  ROUND(AVG(conversion_rate_pct), 1) AS conversion_rate\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_gold.gold_recall_effectiveness\n",
+        "GROUP BY\n",
+        "  recall_type\n",
+        "ORDER BY\n",
+        "  conversion_rate DESC"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "balance_by_office",
+      "displayName": "Patient Balance by Office (Gold)",
+      "queryLines": [
+        "SELECT\n",
+        "  office_name,\n",
+        "  outstanding_patient_balance AS total_patient_balance,\n",
+        "  total_revenue\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_gold.gold_office_performance\n",
+        "ORDER BY\n",
+        "  total_patient_balance DESC"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "noshow_by_age",
+      "displayName": "No-Show by Age Group (Silver)",
+      "queryLines": [
+        "SELECT\n",
+        "  p.age_group,\n",
+        "  COUNT(*) AS total_appointments,\n",
+        "  SUM(\n",
+        "    CASE\n",
+        "      WHEN a.is_no_show THEN 1\n",
+        "      ELSE 0\n",
+        "    END\n",
+        "  ) AS no_shows,\n",
+        "  ROUND(\n",
+        "    SUM(\n",
+        "      CASE\n",
+        "        WHEN a.is_no_show THEN 1\n",
+        "        ELSE 0\n",
+        "      END\n",
+        "    )\n",
+        "      * 100.0\n",
+        "      / COUNT(*),\n",
+        "    1\n",
+        "  ) AS no_show_rate\n",
+        "FROM\n",
+        "  wavepoint_workshop.project_3_silver.appointments a\n",
+        "    JOIN wavepoint_workshop.project_3_silver.patients p\n",
+        "      ON a.patient_id = p.patient_id\n",
+        "GROUP BY\n",
+        "  p.age_group\n",
+        "ORDER BY\n",
+        "  p.age_group"
+      ],
+      "catalog": "wavepoint_workshop",
+      "schema": "project_3_bronze"
+    },
+    {
+      "name": "insurance_networks",
+      "displayName": "Insurance Networks (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.insurance_networks",
+        "dimensions": [
+          {
+            "name": "network_id",
+            "expr": "network_id"
+          },
+          {
+            "name": "network_name",
+            "expr": "network_name"
+          }
+        ],
+        "measures": [
+          {
+            "name": "network_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "insurance_companies",
+      "displayName": "Insurance Companies (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.insurance_companies",
+        "dimensions": [
+          {
+            "name": "insurance_company_id",
+            "expr": "insurance_company_id"
+          },
+          {
+            "name": "company_name",
+            "expr": "company_name"
+          },
+          {
+            "name": "payer_type",
+            "expr": "payer_type"
+          }
+        ],
+        "measures": [
+          {
+            "name": "company_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "invoice_lines",
+      "displayName": "Invoice Lines (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.invoice_lines",
+        "dimensions": [
+          {
+            "name": "line_id",
+            "expr": "line_id"
+          },
+          {
+            "name": "invoice_id",
+            "expr": "invoice_id"
+          },
+          {
+            "name": "billing_code_id",
+            "expr": "billing_code_id"
+          },
+          {
+            "name": "procedure_category",
+            "expr": "procedure_category"
+          }
+        ],
+        "measures": [
+          {
+            "name": "allowed_amount",
+            "expr": "SUM(allowed_amount)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "insurance_amount",
+            "expr": "SUM(estimated_insurance_amount)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "patient_amount",
+            "expr": "SUM(estimated_patient_amount)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "line_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "invoices",
+      "displayName": "Invoices (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.invoices",
+        "dimensions": [
+          {
+            "name": "invoice_id",
+            "expr": "invoice_id"
+          },
+          {
+            "name": "appointment_id",
+            "expr": "appointment_id"
+          },
+          {
+            "name": "office_id",
+            "expr": "office_id"
+          },
+          {
+            "name": "patient_id",
+            "expr": "patient_id"
+          },
+          {
+            "name": "policy_id",
+            "expr": "policy_id"
+          },
+          {
+            "name": "service_date",
+            "expr": "service_date"
+          }
+        ],
+        "measures": [
+          {
+            "name": "total_allowed_amount",
+            "expr": "SUM(total_allowed_amount)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "patient_balance",
+            "expr": "SUM(patient_balance)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "insurance_responsibility",
+            "expr": "SUM(estimated_insurance_responsibility)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "patient_paid",
+            "expr": "SUM(actual_patient_paid_at_visit)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "dental_offices",
+      "displayName": "Dental Offices (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.dental_offices",
+        "dimensions": [
+          {
+            "name": "office_id",
+            "expr": "office_id"
+          },
+          {
+            "name": "office_name",
+            "expr": "office_name"
+          },
+          {
+            "name": "city",
+            "expr": "city"
+          },
+          {
+            "name": "state",
+            "expr": "state"
+          }
+        ],
+        "measures": [
+          {
+            "name": "office_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "insurance_policies",
+      "displayName": "Insurance Policies (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.insurance_policies",
+        "dimensions": [
+          {
+            "name": "policy_id",
+            "expr": "policy_id"
+          },
+          {
+            "name": "insurance_company_id",
+            "expr": "insurance_company_id"
+          },
+          {
+            "name": "group_name",
+            "expr": "group_name"
+          },
+          {
+            "name": "effective_date",
+            "expr": "effective_date"
+          },
+          {
+            "name": "policy_group_number",
+            "expr": "policy_group_number"
+          }
+        ],
+        "measures": [
+          {
+            "name": "policy_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "coverage_rules",
+      "displayName": "Coverage Rules (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.coverage_rules",
+        "dimensions": [
+          {
+            "name": "rule_id",
+            "expr": "rule_id"
+          },
+          {
+            "name": "policy_id",
+            "expr": "policy_id"
+          },
+          {
+            "name": "billing_code_id",
+            "expr": "billing_code_id"
+          }
+        ],
+        "measures": [
+          {
+            "name": "rule_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "recall_reminders",
+      "displayName": "Recall Reminders (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.recall_reminders",
+        "dimensions": [
+          {
+            "name": "recall_id",
+            "expr": "recall_id"
+          },
+          {
+            "name": "office_id",
+            "expr": "office_id"
+          },
+          {
+            "name": "patient_id",
+            "expr": "patient_id"
+          },
+          {
+            "name": "recall_type",
+            "expr": "recall_type"
+          },
+          {
+            "name": "benefit_year",
+            "expr": "benefit_year"
+          },
+          {
+            "name": "due_date",
+            "expr": "due_date"
+          }
+        ],
+        "measures": [
+          {
+            "name": "recall_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "claims_payments",
+      "displayName": "Claims and Payments (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.claims_and_payments",
+        "dimensions": [
+          {
+            "name": "claim_id",
+            "expr": "claim_id"
+          },
+          {
+            "name": "invoice_id",
+            "expr": "invoice_id"
+          },
+          {
+            "name": "policy_id",
+            "expr": "policy_id"
+          },
+          {
+            "name": "patient_id",
+            "expr": "patient_id"
+          },
+          {
+            "name": "office_id",
+            "expr": "office_id"
+          },
+          {
+            "name": "insurance_company_id",
+            "expr": "insurance_company_id"
+          },
+          {
+            "name": "network_status",
+            "expr": "network_status"
+          },
+          {
+            "name": "benefit_year",
+            "expr": "benefit_year"
+          },
+          {
+            "name": "service_date",
+            "expr": "service_date"
+          },
+          {
+            "name": "claim_status",
+            "expr": "claim_status"
+          },
+          {
+            "name": "denial_reason_code",
+            "expr": "denial_reason_code"
+          },
+          {
+            "name": "required_prior_auth",
+            "expr": "required_prior_auth"
+          }
+        ],
+        "measures": [
+          {
+            "name": "amount_claimed",
+            "expr": "SUM(amount_claimed)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "amount_paid",
+            "expr": "SUM(amount_paid)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "claim_count",
+            "expr": "COUNT(1)"
+          },
+          {
+            "name": "avg_days_to_adjudicate",
+            "expr": "AVG(days_to_adjudicate)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "claim_disputes",
+      "displayName": "Claim Disputes (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.claim_disputes",
+        "dimensions": [
+          {
+            "name": "dispute_id",
+            "expr": "dispute_id"
+          },
+          {
+            "name": "claim_id",
+            "expr": "claim_id"
+          },
+          {
+            "name": "dispute_outcome",
+            "expr": "dispute_outcome"
+          },
+          {
+            "name": "dispute_reason_category",
+            "expr": "dispute_reason_category"
+          }
+        ],
+        "measures": [
+          {
+            "name": "dispute_count",
+            "expr": "COUNT(1)"
+          },
+          {
+            "name": "total_recovered",
+            "expr": "SUM(amount_recovered)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "patients",
+      "displayName": "Patients (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.patients",
+        "dimensions": [
+          {
+            "name": "patient_id",
+            "expr": "patient_id"
+          },
+          {
+            "name": "first_name",
+            "expr": "first_name"
+          },
+          {
+            "name": "last_name",
+            "expr": "last_name"
+          },
+          {
+            "name": "age",
+            "expr": "age"
+          },
+          {
+            "name": "gender",
+            "expr": "gender"
+          },
+          {
+            "name": "zip_code",
+            "expr": "zip_code"
+          }
+        ],
+        "measures": [
+          {
+            "name": "patient_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "patient_benefit_years",
+      "displayName": "Patient Benefit Years (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.patient_benefit_years",
+        "dimensions": [
+          {
+            "name": "patient_id",
+            "expr": "patient_id"
+          },
+          {
+            "name": "policy_id",
+            "expr": "policy_id"
+          },
+          {
+            "name": "benefit_year",
+            "expr": "benefit_year"
+          }
+        ],
+        "measures": [
+          {
+            "name": "benefit_year_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "billing_codes",
+      "displayName": "Billing Codes (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.billing_codes",
+        "dimensions": [
+          {
+            "name": "billing_code_id",
+            "expr": "billing_code_id"
+          },
+          {
+            "name": "ada_procedure_code",
+            "expr": "ada_procedure_code"
+          },
+          {
+            "name": "procedure_category",
+            "expr": "procedure_category"
+          },
+          {
+            "name": "description",
+            "expr": "description"
+          },
+          {
+            "name": "standard_fee",
+            "expr": "standard_fee"
+          }
+        ],
+        "measures": [
+          {
+            "name": "code_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "appointments",
+      "displayName": "Appointments (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.appointments",
+        "dimensions": [
+          {
+            "name": "appointment_id",
+            "expr": "appointment_id"
+          },
+          {
+            "name": "office_id",
+            "expr": "office_id"
+          },
+          {
+            "name": "patient_id",
+            "expr": "patient_id"
+          },
+          {
+            "name": "source_recall_id",
+            "expr": "source_recall_id"
+          },
+          {
+            "name": "appointment_status",
+            "expr": "appointment_status"
+          },
+          {
+            "name": "visit_type",
+            "expr": "visit_type"
+          },
+          {
+            "name": "appointment_date_time",
+            "expr": "appointment_date_time"
+          },
+          {
+            "name": "benefit_year",
+            "expr": "benefit_year"
+          }
+        ],
+        "measures": [
+          {
+            "name": "appointment_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "policy_dependents",
+      "displayName": "Policy Dependents (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.policy_dependents",
+        "dimensions": [
+          {
+            "name": "dependent_id",
+            "expr": "dependent_id"
+          },
+          {
+            "name": "subscriber_id",
+            "expr": "subscriber_id"
+          },
+          {
+            "name": "patient_id",
+            "expr": "patient_id"
+          }
+        ],
+        "measures": [
+          {
+            "name": "dependent_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "office_network_participation",
+      "displayName": "Office Network Participation (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.office_network_participation",
+        "dimensions": [
+          {
+            "name": "office_id",
+            "expr": "office_id"
+          },
+          {
+            "name": "network_id",
+            "expr": "network_id"
+          }
+        ],
+        "measures": [
+          {
+            "name": "office_network_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "appointment_reminders",
+      "displayName": "Appointment Reminders (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.appointment_reminders",
+        "dimensions": [
+          {
+            "name": "appointment_reminder_id",
+            "expr": "appointment_reminder_id"
+          },
+          {
+            "name": "appointment_id",
+            "expr": "appointment_id"
+          },
+          {
+            "name": "reminder_sequence",
+            "expr": "reminder_sequence"
+          },
+          {
+            "name": "lead_days",
+            "expr": "lead_days"
+          },
+          {
+            "name": "delivery_status",
+            "expr": "delivery_status"
+          }
+        ],
+        "measures": [
+          {
+            "name": "reminder_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "primary_policy_holders",
+      "displayName": "Primary Policy Holders (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.primary_policy_holders",
+        "dimensions": [
+          {
+            "name": "subscriber_id",
+            "expr": "subscriber_id"
+          },
+          {
+            "name": "policy_id",
+            "expr": "policy_id"
+          },
+          {
+            "name": "patient_id",
+            "expr": "patient_id"
+          }
+        ],
+        "measures": [
+          {
+            "name": "subscriber_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "insurance_company_networks",
+      "displayName": "Insurance Company Networks (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.insurance_company_networks",
+        "dimensions": [
+          {
+            "name": "insurance_company_id",
+            "expr": "insurance_company_id"
+          },
+          {
+            "name": "network_id",
+            "expr": "network_id"
+          }
+        ],
+        "measures": [
+          {
+            "name": "company_network_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "office_insurance_network",
+      "displayName": "Office Insurance Network (Silver)",
+      "config": {
+        "version": "1.1",
+        "source": "wavepoint_workshop.project_3_silver.office_insurance_network",
+        "dimensions": [
+          {
+            "name": "office_id",
+            "expr": "office_id"
+          },
+          {
+            "name": "insurance_company_id",
+            "expr": "insurance_company_id"
+          },
+          {
+            "name": "shared_network_id",
+            "expr": "shared_network_id"
+          },
+          {
+            "name": "network_status",
+            "expr": "network_status"
+          }
+        ],
+        "measures": [
+          {
+            "name": "office_insurance_count",
+            "expr": "COUNT(1)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "cross_entity_claims",
+      "displayName": "Cross-Entity Claims (Silver)",
+      "config": {
+        "source": "wavepoint_workshop.project_3_silver.claims_and_payments",
+        "measures": [
+          {
+            "name": "unpaid_amount",
+            "expr": "SUM(source.amount_claimed - source.amount_paid)",
+            "displayName": "Unpaid Amount",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "total_claimed",
+            "expr": "SUM(source.amount_claimed)",
+            "displayName": "Total Claimed",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "total_paid",
+            "expr": "SUM(source.amount_paid)",
+            "displayName": "Total Paid",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "claim_count",
+            "expr": "COUNT(1)",
+            "displayName": "Claim Count"
+          }
+        ],
+        "version": "1.1",
+        "dimensions": [
+          {
+            "name": "company_name",
+            "expr": "insurance_companies.company_name",
+            "displayName": "Insurance Company"
+          },
+          {
+            "name": "payer_type",
+            "expr": "insurance_companies.payer_type",
+            "displayName": "Payer Type"
+          },
+          {
+            "name": "office_name",
+            "expr": "dental_offices.office_name",
+            "displayName": "Office Name"
+          },
+          {
+            "name": "office_state",
+            "expr": "dental_offices.state",
+            "displayName": "Office State"
+          },
+          {
+            "name": "claim_status",
+            "expr": "source.claim_status",
+            "displayName": "Claim Status"
+          },
+          {
+            "name": "denial_reason_code",
+            "expr": "source.denial_reason_code",
+            "displayName": "Denial Reason"
+          }
+        ],
+        "joins": [
+          {
+            "name": "insurance_companies",
+            "source": "wavepoint_workshop.project_3_silver.insurance_companies",
+            "on": "source.insurance_company_id = insurance_companies.insurance_company_id"
+          },
+          {
+            "name": "dental_offices",
+            "source": "wavepoint_workshop.project_3_silver.dental_offices",
+            "on": "source.office_id = dental_offices.office_id"
+          }
+        ]
+      }
+    },
+    {
+      "name": "cross_entity_revenue",
+      "displayName": "Cross-Entity Revenue (Silver)",
+      "config": {
+        "source": "wavepoint_workshop.project_3_silver.invoices",
+        "measures": [
+          {
+            "name": "total_revenue",
+            "expr": "SUM(source.total_allowed_amount)",
+            "displayName": "Total Revenue",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "total_gross",
+            "expr": "SUM(source.total_gross_amount)",
+            "displayName": "Total Gross",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "patient_balance_total",
+            "expr": "SUM(source.patient_balance)",
+            "displayName": "Patient Balance",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            }
+          },
+          {
+            "name": "invoice_count",
+            "expr": "COUNT(1)",
+            "displayName": "Invoice Count"
+          }
+        ],
+        "version": "1.1",
+        "dimensions": [
+          {
+            "name": "gender",
+            "expr": "patients.gender",
+            "displayName": "Gender"
+          },
+          {
+            "name": "patient_state",
+            "expr": "patients.state",
+            "displayName": "Patient State"
+          },
+          {
+            "name": "patient_role",
+            "expr": "patients.patient_role",
+            "displayName": "Patient Role"
+          },
+          {
+            "name": "age",
+            "expr": "patients.age",
+            "displayName": "Age"
+          }
+        ],
+        "joins": [
+          {
+            "name": "patients",
+            "source": "wavepoint_workshop.project_3_silver.patients",
+            "on": "source.patient_id = patients.patient_id"
+          }
+        ]
+      }
+    }
+  ],
+  "relationshipGraphs": [
+    {
+      "sources": [
+        {
+          "name": "Denial_Reasons",
+          "datasetName": "denial_reasons"
+        },
+        {
+          "name": "Monthly_Financials",
+          "datasetName": "monthly_financials"
+        },
+        {
+          "name": "Claims_Status",
+          "datasetName": "claims_status"
+        },
+        {
+          "name": "Appointment_Status",
+          "datasetName": "appt_status"
+        },
+        {
+          "name": "Denial_Analysis_by_Payer",
+          "datasetName": "denial_analysis"
+        },
+        {
+          "name": "Dispute_Outcomes",
+          "datasetName": "dispute_outcomes"
+        },
+        {
+          "name": "Overview_KPIs",
+          "datasetName": "overview_kpis"
+        },
+        {
+          "name": "Network_Status_Comparison",
+          "datasetName": "network_comparison"
+        },
+        {
+          "name": "Appointments_by_Office",
+          "datasetName": "appts_by_office"
+        },
+        {
+          "name": "Visit_Type_Distribution",
+          "datasetName": "visit_type"
+        },
+        {
+          "name": "Revenue_by_Procedure_Category",
+          "datasetName": "revenue_by_category"
+        },
+        {
+          "name": "Recall_Reminder_Effectiveness",
+          "datasetName": "recall_effectiveness"
+        },
+        {
+          "name": "Patient_Balance_by_Office",
+          "datasetName": "balance_by_office"
+        },
+        {
+          "name": "NoShow_by_Age_Group",
+          "datasetName": "noshow_by_age"
+        },
+        {
+          "name": "Insurance_Networks",
+          "datasetName": "insurance_networks"
+        },
+        {
+          "name": "Insurance_Companies",
+          "datasetName": "insurance_companies"
+        },
+        {
+          "name": "Invoice_Lines",
+          "datasetName": "invoice_lines"
+        },
+        {
+          "name": "Invoices",
+          "datasetName": "invoices"
+        },
+        {
+          "name": "Dental_Offices",
+          "datasetName": "dental_offices"
+        },
+        {
+          "name": "Insurance_Policies",
+          "datasetName": "insurance_policies"
+        },
+        {
+          "name": "Coverage_Rules",
+          "datasetName": "coverage_rules"
+        },
+        {
+          "name": "Recall_Reminders",
+          "datasetName": "recall_reminders"
+        },
+        {
+          "name": "Claims_and_Payments",
+          "datasetName": "claims_payments"
+        },
+        {
+          "name": "Claim_Disputes",
+          "datasetName": "claim_disputes"
+        },
+        {
+          "name": "Patients",
+          "datasetName": "patients"
+        },
+        {
+          "name": "Patient_Benefit_Years",
+          "datasetName": "patient_benefit_years"
+        },
+        {
+          "name": "Billing_Codes",
+          "datasetName": "billing_codes"
+        },
+        {
+          "name": "Appointments",
+          "datasetName": "appointments"
+        },
+        {
+          "name": "Policy_Dependents",
+          "datasetName": "policy_dependents"
+        },
+        {
+          "name": "Office_Network_Participation",
+          "datasetName": "office_network_participation"
+        },
+        {
+          "name": "Appointment_Reminders",
+          "datasetName": "appointment_reminders"
+        },
+        {
+          "name": "Primary_Policy_Holders",
+          "datasetName": "primary_policy_holders"
+        },
+        {
+          "name": "Insurance_Company_Networks",
+          "datasetName": "insurance_company_networks"
+        },
+        {
+          "name": "Office_Insurance_Network",
+          "datasetName": "office_insurance_network"
+        },
+        {
+          "name": "CrossEntity_Claims_Analysis",
+          "datasetName": "cross_entity_claims"
+        },
+        {
+          "name": "CrossEntity_Revenue_Analysis",
+          "datasetName": "cross_entity_revenue"
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "4cbe3bfb",
+      "displayName": "Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "kpi_patients",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "overview_kpis",
+                  "fields": [
+                    {
+                      "name": "sum(total_patients)",
+                      "expression": "SUM(`total_patients`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total Patients",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_patients)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_appointments",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "overview_kpis",
+                  "fields": [
+                    {
+                      "name": "sum(total_appointments)",
+                      "expression": "SUM(`total_appointments`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total Appointments",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_appointments)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_claims",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "overview_kpis",
+                  "fields": [
+                    {
+                      "name": "sum(total_claims)",
+                      "expression": "SUM(`total_claims`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total Claims",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_claims)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_revenue",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "overview_kpis",
+                  "fields": [
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total Revenue",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_revenue)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_denial_rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "overview_kpis",
+                  "fields": [
+                    {
+                      "name": "sum(denial_rate)",
+                      "expression": "SUM(`denial_rate`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Denial Rate %",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(denial_rate)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_noshow_rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "overview_kpis",
+                  "fields": [
+                    {
+                      "name": "sum(no_show_rate)",
+                      "expression": "SUM(`no_show_rate`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "No-Show Rate %",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(no_show_rate)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 10,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "pie_appt_status",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "appt_status",
+                  "fields": [
+                    {
+                      "name": "sum(appointment_count)",
+                      "expression": "SUM(`appointment_count`)"
+                    },
+                    {
+                      "name": "appointment_status",
+                      "expression": "`appointment_status`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Appointment Status"
+              },
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(appointment_count)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "appointment_count"
+                },
+                "color": {
+                  "fieldName": "appointment_status",
+                  "displayName": "appointment_status",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 4,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "pie_claims_status",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "claims_status",
+                  "fields": [
+                    {
+                      "name": "sum(claim_count)",
+                      "expression": "SUM(`claim_count`)"
+                    },
+                    {
+                      "name": "claim_status",
+                      "expression": "`claim_status`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Claims Status"
+              },
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(claim_count)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "claim_count"
+                },
+                "color": {
+                  "fieldName": "claim_status",
+                  "displayName": "claim_status",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 3,
+            "width": 4,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "line_monthly_rev",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "monthly_financials",
+                  "fields": [
+                    {
+                      "name": "service_month",
+                      "expression": "`service_month`"
+                    },
+                    {
+                      "name": "sum(revenue)",
+                      "expression": "SUM(`revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Monthly Revenue Trend"
+              },
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "service_month",
+                  "displayName": "service_month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(revenue)",
+                  "displayName": "revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 3,
+            "width": 4,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "claims_denials",
+      "displayName": "Claims & Denials",
+      "layout": [
+        {
+          "widget": {
+            "name": "bar_denial_rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "denial_analysis",
+                  "fields": [
+                    {
+                      "name": "company_name",
+                      "expression": "`company_name`"
+                    },
+                    {
+                      "name": "denial_rate",
+                      "expression": "`denial_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Denial Rate by Insurance Company",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "company_name",
+                  "displayName": "company_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "denial_rate",
+                  "displayName": "denial_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "company_name",
+                  "displayName": "company_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_denial_reasons",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "denial_reasons",
+                  "fields": [
+                    {
+                      "name": "denial_reason_code",
+                      "expression": "`denial_reason_code`"
+                    },
+                    {
+                      "name": "sum(denial_count)",
+                      "expression": "SUM(`denial_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Denial Reasons"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "denial_reason_code",
+                  "displayName": "denial_reason_code",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(denial_count)",
+                  "displayName": "denial_count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "denial_reason_code",
+                  "displayName": "denial_reason_code",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_dispute_outcomes",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dispute_outcomes",
+                  "fields": [
+                    {
+                      "name": "dispute_outcome",
+                      "expression": "`dispute_outcome`"
+                    },
+                    {
+                      "name": "sum(dispute_count)",
+                      "expression": "SUM(`dispute_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Dispute Outcomes"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "dispute_outcome",
+                  "displayName": "dispute_outcome",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(dispute_count)",
+                  "displayName": "dispute_count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "dispute_outcome",
+                  "displayName": "dispute_outcome",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_days_adjudicate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "denial_analysis",
+                  "fields": [
+                    {
+                      "name": "company_name",
+                      "expression": "`company_name`"
+                    },
+                    {
+                      "name": "avg_days_to_adjudicate",
+                      "expression": "`avg_days_to_adjudicate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Avg Days to Adjudicate by Payer",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "company_name",
+                  "displayName": "company_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "avg_days_to_adjudicate",
+                  "displayName": "avg_days_to_adjudicate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "company_name",
+                  "displayName": "company_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 7,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "table_denial_analysis",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "denial_analysis",
+                  "fields": [
+                    {
+                      "name": "company_name",
+                      "expression": "`company_name`"
+                    },
+                    {
+                      "name": "total_claims",
+                      "expression": "`total_claims`"
+                    },
+                    {
+                      "name": "denied_claims",
+                      "expression": "`denied_claims`"
+                    },
+                    {
+                      "name": "denial_rate",
+                      "expression": "`denial_rate`"
+                    },
+                    {
+                      "name": "avg_days_to_adjudicate",
+                      "expression": "`avg_days_to_adjudicate`"
+                    },
+                    {
+                      "name": "total_claimed",
+                      "expression": "`total_claimed`"
+                    },
+                    {
+                      "name": "total_paid",
+                      "expression": "`total_paid`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Denial Analysis Detail"
+              },
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "company_name"
+                  },
+                  {
+                    "fieldName": "total_claims"
+                  },
+                  {
+                    "fieldName": "denied_claims"
+                  },
+                  {
+                    "fieldName": "denial_rate"
+                  },
+                  {
+                    "fieldName": "avg_days_to_adjudicate"
+                  },
+                  {
+                    "fieldName": "total_claimed"
+                  },
+                  {
+                    "fieldName": "total_paid"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 14,
+            "width": 12,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_claims_by_office",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "CrossEntity_Claims_Analysis__office_name",
+                      "expression": "`CrossEntity_Claims_Analysis`.`office_name`"
+                    },
+                    {
+                      "name": "measure(CrossEntity_Claims_Analysis__total_claimed)",
+                      "expression": "MEASURE(`CrossEntity_Claims_Analysis`.`total_claimed`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Claim Amount by Office (Cross-Entity)",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "CrossEntity_Claims_Analysis__office_name",
+                  "displayName": "Office",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(CrossEntity_Claims_Analysis__total_claimed)",
+                  "displayName": "Total Claimed",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "CrossEntity_Claims_Analysis__office_name",
+                  "displayName": "Office",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 21,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_unpaid_by_insurer",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "CrossEntity_Claims_Analysis__company_name",
+                      "expression": "`CrossEntity_Claims_Analysis`.`company_name`"
+                    },
+                    {
+                      "name": "measure(CrossEntity_Claims_Analysis__unpaid_amount)",
+                      "expression": "MEASURE(`CrossEntity_Claims_Analysis`.`unpaid_amount`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Unpaid Claims by Insurance Company (Cross-Entity)"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "CrossEntity_Claims_Analysis__company_name",
+                  "displayName": "company_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(CrossEntity_Claims_Analysis__unpaid_amount)",
+                  "displayName": "unpaid_amount",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "CrossEntity_Claims_Analysis__company_name",
+                  "displayName": "company_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 21,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_claims_by_state",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "CrossEntity_Claims_Analysis__office_state",
+                      "expression": "`CrossEntity_Claims_Analysis`.`office_state`"
+                    },
+                    {
+                      "name": "measure(CrossEntity_Claims_Analysis__claim_count)",
+                      "expression": "MEASURE(`CrossEntity_Claims_Analysis`.`claim_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Claim Count by Office State (Cross-Entity)"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "CrossEntity_Claims_Analysis__office_state",
+                  "displayName": "office_state",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(CrossEntity_Claims_Analysis__claim_count)",
+                  "displayName": "claim_count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "CrossEntity_Claims_Analysis__office_state",
+                  "displayName": "office_state",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 28,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_paid_by_payer_type",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "CrossEntity_Claims_Analysis__payer_type",
+                      "expression": "`CrossEntity_Claims_Analysis`.`payer_type`"
+                    },
+                    {
+                      "name": "measure(CrossEntity_Claims_Analysis__total_paid)",
+                      "expression": "MEASURE(`CrossEntity_Claims_Analysis`.`total_paid`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Paid by Payer Type (Cross-Entity)"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "CrossEntity_Claims_Analysis__payer_type",
+                  "displayName": "payer_type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(CrossEntity_Claims_Analysis__total_paid)",
+                  "displayName": "total_paid",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "CrossEntity_Claims_Analysis__payer_type",
+                  "displayName": "payer_type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 28,
+            "width": 6,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "patients_appts",
+      "displayName": "Patients & Appointments",
+      "layout": [
+        {
+          "widget": {
+            "name": "bar_appts_office",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "appts_by_office",
+                  "fields": [
+                    {
+                      "name": "office_name",
+                      "expression": "`office_name`"
+                    },
+                    {
+                      "name": "sum(total_appointments)",
+                      "expression": "SUM(`total_appointments`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Appointments by Office"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "office_name",
+                  "displayName": "office_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_appointments)",
+                  "displayName": "total_appointments",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "office_name",
+                  "displayName": "office_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_noshow_age",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "noshow_by_age",
+                  "fields": [
+                    {
+                      "name": "age_group",
+                      "expression": "`age_group`"
+                    },
+                    {
+                      "name": "no_show_rate",
+                      "expression": "`no_show_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "No-Show Rate by Age Group",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "age_group",
+                  "displayName": "age_group",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "no_show_rate",
+                  "displayName": "no_show_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "age_group",
+                  "displayName": "age_group",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "pie_visit_type",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "visit_type",
+                  "fields": [
+                    {
+                      "name": "sum(visit_count)",
+                      "expression": "SUM(`visit_count`)"
+                    },
+                    {
+                      "name": "visit_type",
+                      "expression": "`visit_type`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Visit Type Distribution"
+              },
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(visit_count)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "visit_count"
+                },
+                "color": {
+                  "fieldName": "visit_type",
+                  "displayName": "visit_type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_recall_effect",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "recall_effectiveness",
+                  "fields": [
+                    {
+                      "name": "recall_type",
+                      "expression": "`recall_type`"
+                    },
+                    {
+                      "name": "conversion_rate",
+                      "expression": "`conversion_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Recall Reminder Effectiveness",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "recall_type",
+                  "displayName": "recall_type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "conversion_rate",
+                  "displayName": "conversion_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "recall_type",
+                  "displayName": "recall_type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 7,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_revenue_gender",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "CrossEntity_Revenue_Analysis__gender",
+                      "expression": "`CrossEntity_Revenue_Analysis`.`gender`"
+                    },
+                    {
+                      "name": "measure(CrossEntity_Revenue_Analysis__total_revenue)",
+                      "expression": "MEASURE(`CrossEntity_Revenue_Analysis`.`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Revenue by Patient Gender (Cross-Entity)",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "CrossEntity_Revenue_Analysis__gender",
+                  "displayName": "Gender",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(CrossEntity_Revenue_Analysis__total_revenue)",
+                  "displayName": "Total Revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "CrossEntity_Revenue_Analysis__gender",
+                  "displayName": "Gender",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 14,
+            "width": 6,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "financial",
+      "displayName": "Financial",
+      "layout": [
+        {
+          "widget": {
+            "name": "bar_balance_office",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "balance_by_office",
+                  "fields": [
+                    {
+                      "name": "office_name",
+                      "expression": "`office_name`"
+                    },
+                    {
+                      "name": "sum(total_patient_balance)",
+                      "expression": "SUM(`total_patient_balance`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Patient Balance by Office"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "office_name",
+                  "displayName": "office_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_patient_balance)",
+                  "displayName": "total_patient_balance",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "office_name",
+                  "displayName": "office_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_revenue_category",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "revenue_by_category",
+                  "fields": [
+                    {
+                      "name": "procedure_category",
+                      "expression": "`procedure_category`"
+                    },
+                    {
+                      "name": "sum(total_allowed)",
+                      "expression": "SUM(`total_allowed`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue by Procedure Category"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "procedure_category",
+                  "displayName": "procedure_category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_allowed)",
+                  "displayName": "total_allowed",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "procedure_category",
+                  "displayName": "procedure_category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_network_comparison",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "network_comparison",
+                  "fields": [
+                    {
+                      "name": "network_status",
+                      "expression": "`network_status`"
+                    },
+                    {
+                      "name": "sum(total_claimed)",
+                      "expression": "SUM(`total_claimed`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "In-Network vs Out-of-Network Claims"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "network_status",
+                  "displayName": "network_status",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_claimed)",
+                  "displayName": "total_claimed",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "network_status",
+                  "displayName": "network_status",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "line_monthly_balance",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "monthly_financials",
+                  "fields": [
+                    {
+                      "name": "service_month",
+                      "expression": "`service_month`"
+                    },
+                    {
+                      "name": "sum(patient_balance)",
+                      "expression": "SUM(`patient_balance`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Monthly Patient Balance Trend"
+              },
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "service_month",
+                  "displayName": "service_month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(patient_balance)",
+                  "displayName": "patient_balance",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 7,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_unpaid_by_office_v2",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "CrossEntity_Claims_Analysis__office_name",
+                      "expression": "`CrossEntity_Claims_Analysis`.`office_name`"
+                    },
+                    {
+                      "name": "measure(CrossEntity_Claims_Analysis__unpaid_amount)",
+                      "expression": "MEASURE(`CrossEntity_Claims_Analysis`.`unpaid_amount`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Unpaid Claims by Office (Cross-Entity)"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "CrossEntity_Claims_Analysis__office_name",
+                  "displayName": "Office",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(CrossEntity_Claims_Analysis__unpaid_amount)",
+                  "displayName": "Unpaid Amount",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "CrossEntity_Claims_Analysis__office_name",
+                  "displayName": "Office",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 14,
+            "width": 6,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}

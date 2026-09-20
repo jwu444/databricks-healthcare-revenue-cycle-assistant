@@ -1,0 +1,23 @@
+billing_code_id,ada_procedure_code,description,procedure_category,standard_fee,in_network_allowed_amount,out_network_allowed_amount,requires_prior_auth
+1,D0120,Periodic oral exam,preventive,75.0,49.77,69.9,False
+2,D0150,Comprehensive oral exam,preventive,120.0,78.92,104.71,False
+3,D0274,"Bitewing x-rays, four films",preventive,85.0,56.42,72.31,False
+4,D0140,Limited problem-focused exam,preventive,95.0,64.1,87.69,False
+5,D0210,Full mouth x-ray series,preventive,160.0,113.09,140.31,False
+6,D1110,Adult cleaning,preventive,120.0,88.68,108.92,False
+7,D1120,Child cleaning,preventive,95.0,57.48,81.11,False
+8,D1206,Fluoride varnish,preventive,45.0,30.26,39.91,False
+9,D1351,"Sealant, per tooth",preventive,65.0,44.66,61.5,False
+10,D2140,"Amalgam filling, one surface",basic,175.0,107.1,161.53,False
+11,D2391,"Composite filling, one surface",basic,210.0,142.58,196.55,False
+12,D2392,"Composite filling, two surface",basic,265.0,188.84,232.65,False
+13,D4341,"Deep cleaning, per quadrant",basic,295.0,199.88,266.19,False
+14,D7140,Simple extraction,basic,225.0,155.59,196.77,False
+15,D2740,Porcelain crown,major,1250.0,868.25,1145.47,True
+16,D2750,Porcelain-metal crown,major,1150.0,805.35,1056.17,True
+17,D2950,Core buildup,major,320.0,217.88,290.55,False
+18,D3220,Pulpotomy,major,280.0,193.75,263.3,False
+19,D3330,"Root canal, molar",major,1100.0,748.28,936.19,True
+20,D5110,Complete upper denture,major,1650.0,1102.37,1552.0,True
+21,D6010,Surgical implant placement,major,2200.0,1509.41,1942.93,True
+22,D7210,Surgical extraction,major,395.0,257.91,374.37,False

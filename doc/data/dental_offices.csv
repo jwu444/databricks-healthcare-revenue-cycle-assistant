@@ -1,0 +1,21 @@
+office_id,office_name,city,state,zip_code,specialty_type,provider_count,opened_date
+1,Fowler Dental Care,Lake Joshuabury,VA,18790,General Dentistry,7,2021-04-01
+2,Rhodes Dental Care,New Roberttown,MD,12781,General Dentistry,3,2014-07-09
+3,Wagner Dental Care,New Jamesside,PA,55488,Pediatric Dentistry,2,2014-07-17
+4,Lawrence Dental Care,Port Lindachester,VA,45098,General Dentistry,2,2015-04-16
+5,Lewis Dental Care,Curtisfurt,MD,13177,General Dentistry,6,2016-05-05
+6,Cooper Dental Care,Lindsaymouth,PA,70785,General Dentistry,3,2013-04-19
+7,Nielsen Dental Care,New Kellystad,PA,76175,Pediatric Dentistry,5,2014-03-05
+8,Jones Dental Care,Port Keith,PA,10959,General Dentistry,4,2022-10-18
+9,Delacruz Dental Care,Ramirezstad,VA,21820,Pediatric Dentistry,8,2016-06-27
+10,Clark Dental Care,Jacquelineland,NC,80341,Pediatric Dentistry,4,2019-12-06
+11,Ferguson Dental Care,East Steven,MD,35883,General Dentistry,8,2024-07-16
+12,Bowman Dental Care,Lake Mark,VA,07832,General Dentistry,5,2014-08-27
+13,Johnson Dental Care,Richardland,DC,28154,General Dentistry,6,2023-07-19
+14,Bradley Dental Care,Jasonfort,VA,52357,General Dentistry,7,2023-03-06
+15,Day Dental Care,West Donald,VA,98148,General Dentistry,5,2018-12-22
+16,Baker Dental Care,Hurstfurt,DC,47948,General Dentistry,8,2014-07-12
+17,Bright Dental Care,Daviston,DC,14872,General Dentistry,6,2013-08-30
+18,Moore Dental Care,Carlsonfurt,VA,50520,General Dentistry,2,2019-06-04
+19,Mcdonald Dental Care,Tashatown,DC,89667,General Dentistry,2,2021-01-16
+20,Maldonado Dental Care,Kaylamouth,VA,15122,Orthodontics,5,2015-06-29

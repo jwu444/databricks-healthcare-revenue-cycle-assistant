@@ -1,0 +1,42 @@
+# Declarative Automation Bundle (DABs) for Dental Billing Analytics
+# https://docs.databricks.com/aws/en/dev-tools/bundles/index/
+
+bundle:
+  name: dental_billing
+
+variables:
+  warehouse_id:
+    description: SQL warehouse ID for dashboard queries and job execution
+  catalog:
+    description: Unity Catalog name for bronze tables
+    default: wavepoint_workshop
+  schema:
+    description: Bronze schema name
+    default: project_3_bronze
+  volume_name:
+    description: Volume name for raw data files
+    default: raw_data
+
+targets:
+  # Development environment (default)
+  dev:
+    default: true
+    workspace:
+      host: https://dbc-8871de8a-2714.cloud.databricks.com
+    variables:
+      warehouse_id: ${DATABRICKS_WAREHOUSE_ID}
+      catalog: wavepoint_workshop
+      schema: project_3_bronze
+
+  # Production environment
+  prod:
+    workspace:
+      host: https://dbc-8871de8a-2714.cloud.databricks.com
+    variables:
+      warehouse_id: ${DATABRICKS_WAREHOUSE_ID}
+      catalog: wavepoint_workshop
+      schema: project_3_bronze
+
+# Include resource definitions from separate files
+include:
+  - resources/*.yml

@@ -1,0 +1,10 @@
+insurance_company_id,company_name,payer_type,average_reimbursement_turnaround_days,denial_rate_baseline
+1,Moore Benefit Insurance,Commercial PPO,37,0.103
+2,Smith Benefit Insurance,Commercial PPO,31,0.178
+3,Bowen Health Insurance,DHMO,24,0.155
+4,Cortez Dental Insurance,Commercial PPO,38,0.118
+5,Stanton Benefit Insurance,Medicaid,28,0.176
+6,Gill Health Insurance,Medicaid,28,0.195
+7,Romero Dental Insurance,DHMO,31,0.089
+8,Rodriguez Benefit Insurance,Medicaid,34,0.11
+9,Garrett Benefit Insurance,Commercial PPO,43,0.1

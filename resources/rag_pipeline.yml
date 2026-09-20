@@ -1,0 +1,91 @@
+# RAG pipeline resources for hands-on project 2
+# Included by databricks.yml via: include: - resources/*.yml
+#
+# Builds the retrieval index over the 31 dental article PDFs:
+#   volume PDFs -> ai_parse_document -> ai_prep_search -> article_chunks
+#                -> Delta Sync vector index on the wavepoint-vs endpoint
+#
+# NOTE ON COMPUTE: this job runs on SERVERLESS, not the classic job_cluster
+# the project-1 jobs use. Those pin DBR 15.4, which is too old here:
+#   ai_parse_document needs DBR 17.3+
+#   ai_prep_search    needs DBR 18.2+ / serverless env v3+
+# A notebook task with no cluster spec runs on serverless compute.
+
+resources:
+  jobs:
+    # Refresh the RAG source tables. Run this whenever the PDFs in the volume
+    # change. It does NOT create the endpoint or index -- see the commented
+    # block at the bottom of this file for those.
+    rag_ingest:
+      name: "RAG: Build Article Chunks"
+      description: >-
+        Parses the dental article PDFs from the bronze volume, chunks them
+        semantically with ai_prep_search, and writes
+        project_3_silver.article_chunks with Change Data Feed enabled.
+      email_notifications:
+        on_failure:
+          - ${DATABRICKS_USER_EMAIL}
+      tasks:
+        - task_key: build_article_chunks
+          description: "Parse PDFs, chunk semantically, enable CDF"
+          notebook_task:
+            notebook_path: /Workspace/Users/binwu247@gmail.com/project-3/hands_on_project_2/00_Instructions
+            source: WORKSPACE
+            base_parameters:
+              catalog: ${var.catalog}
+              silver_schema: project_3_silver
+
+# ---------------------------------------------------------------------------
+# Vector Search endpoint and index -- INTENTIONALLY COMMENTED OUT
+# ---------------------------------------------------------------------------
+# The YAML below is schema-valid (verified with `bundle validate --strict`
+# against CLI v1.14.1). It is commented for two deliberate reasons:
+#
+#  1. COST. A Vector Search endpoint bills continuously for as long as it
+#     exists -- it has no pause, only create and delete. Uncommenting this
+#     means any `bundle deploy`, including one triggered by CI on merge,
+#     stands up a billing resource. Decide that deliberately.
+#
+#  2. THESE ALREADY EXIST. wavepoint-vs and article_chunks_index were created
+#     imperatively (CLI/SDK) and are not in bundle state. Deploying them as
+#     bundle resources without importing them first may conflict.
+#
+# To adopt them, uncomment and run `bundle deploy` against a target where you
+# accept the billing, or delete the existing pair first and let the bundle own
+# them from the start.
+#
+#   vector_search_endpoints:
+#     wavepoint_vs:
+#       name: wavepoint-vs
+#       # STANDARD: 20-50ms queries. STORAGE_OPTIMIZED is ~7x cheaper but
+#       # 300-500ms, and only pays off at 100M+ vectors. 104 chunks here.
+#       endpoint_type: STANDARD
+#
+#   vector_search_indexes:
+#     article_chunks_index:
+#       name: ${var.catalog}.project_3_silver.article_chunks_index
+#       endpoint_name: wavepoint-vs
+#       primary_key: chunk_id
+#       index_type: DELTA_SYNC
+#       delta_sync_index_spec:
+#         source_table: ${var.catalog}.project_3_silver.article_chunks
+#         # TRIGGERED syncs on demand and lets compute spin down between runs.
+#         # CONTINUOUS keeps compute warm -- unnecessary for documents that
+#         # change rarely. After rewriting article_chunks you must sync.
+#         pipeline_type: TRIGGERED
+#         embedding_source_columns:
+#           # Embed the CONTEXT-ENRICHED column, not the bare chunk text.
+#           # ai_prep_search returns chunk_to_embed (title/headers/page folded
+#           # in, ~30% longer) and chunk_to_retrieve (clean text). Embedding
+#           # the clean text instead loses the context that makes retrieval
+#           # work -- this is the single easiest thing to get backwards.
+#           - name: chunk_to_embed
+#             embedding_model_endpoint_name: databricks-gte-large-en
+#         # Columns returned by a query. `content` is what the LLM reads;
+#         # doc_uri and page are what the citation shows.
+#         columns_to_sync:
+#           - chunk_id
+#           - doc_uri
+#           - page
+#           - content
+#           - chunk_method

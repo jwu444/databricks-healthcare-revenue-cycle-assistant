@@ -1,0 +1,2 @@
+# This directory stores exported AI/BI dashboard JSON files.
+# Run: databricks bundle generate dashboard --id <dashboard-id> --path ./dashboards/dental_billing.lvdash.json
