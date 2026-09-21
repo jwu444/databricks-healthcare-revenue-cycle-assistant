@@ -106,80 +106,6 @@ Two things the split is designed to teach. **Postgres holds *application* state*
 
 ---
 
-## 💰 Why We Spin the Vector Search Index Up and Tear It Down
-
-**This is the one resource in the workshop that bills while you are asleep.**
-
-### The asymmetry
-
-Almost everything here is either free at rest or stops on its own:
-
-| Resource | Idle behavior |
-|---|---|
-| SQL warehouse | **Auto-stops** after idle timeout — bills only while running |
-| Delta tables | Storage only, negligible |
-| Genie agent | **Free at rest** — costs only the SQL it runs when asked |
-| Serving endpoints (Foundation Models) | **Pay per token** — nothing when unused |
-| **Vector Search endpoint** | **Bills continuously until deleted** |
-
-A Vector Search endpoint is **not** serverless-per-query. It is provisioned compute, and **there is no pause.** We verified this against the CLI rather than assuming it — the entire command surface is `create`, `delete`, `get`, `list`, `patch`, and `patch-endpoint` only accepts `--target-qps`. No stop, no suspend, no auto-stop-after-idle.
-
-So the only "pause" is **delete and rebuild**.
-
-### Why that is cheap here
-
-The expensive work is durable in Delta and survives teardown:
-
-```
-article_parsed   31 rows   ← 2m18s of LLM parsing, one inference per PDF   SURVIVES
-article_chunks  104 rows   ← semantic chunks, CDF enabled                  SURVIVES
-─────────────────────────────────────────────────────────────────────────────────
-article_chunks_index       ← 104 embeddings                                DISPOSABLE
-wavepoint-vs endpoint      ← the billing resource                          DISPOSABLE
-```
-
-Deleting the index and endpoint destroys **only the embeddings**. Rebuilding re-runs Steps 7–9 against the surviving `article_chunks` — no PDF is re-parsed and no parsing is re-paid.
-
-### The actual cycle we ran
-
-| | |
-|---|---|
-| Endpoint created | 17:07 |
-| Endpoint ONLINE | ~17:08 |
-| Index created | 17:08 |
-| Index ONLINE, 104/104 embedded | 17:34 |
-| Playground testing | ~18:00 |
-| **Torn down** | ~19:00 |
-| **Total lifetime** | **~2 hours** |
-
-Rebuild cost is about **30 minutes of wall clock** — most of it endpoint provisioning, then a few minutes to embed 104 chunks. Not per-query, but absolutely worth doing overnight or between sessions.
-
-### How to tear down
-
-Index first, then endpoint. Both are in project 2's Step 12, **deliberately left commented out** so a run-all cannot destroy your work:
-
-```python
-w.vector_search_indexes.delete_index(index_name="wavepoint_workshop.project_3_silver.article_chunks_index")
-w.vector_search_endpoints.delete_endpoint(endpoint_name="wavepoint-vs")
-```
-
-Verify nothing is billing:
-
-```bash
-databricks vector-search-endpoints list-endpoints --profile DEFAULT
-# expect: no endpoints
-```
-
-### How to bring it back
-
-Re-run project 2's Steps 7–9. Confirm `article_chunks` still has 104 rows and `delta.enableChangeDataFeed = true`, then create the endpoint and index. Expect ~30 minutes to ONLINE, and check that `indexed_row_count` matches the source table before trusting results — an index can come ONLINE having indexed only *some* rows.
-
-### One trap for automation
-
-Project 2's `resources/rag_pipeline.yml` declares the ingest job but leaves the endpoint and index **commented out**, and that is on purpose. `vector_search_endpoints` and `vector_search_indexes` *are* valid DABs resource types (verified against the CLI schema), so uncommenting them means **any `bundle deploy` — including CI on merge — silently stands up a billing resource.** Decide that deliberately.
-
----
-
 ## Repository Layout
 
 ```
@@ -197,26 +123,6 @@ doc/
   dental_data_model_design.md
 databricks.yml         Bundle config (dev / prod targets)
 ```
-
-## Unity Catalog Layout
-
-```
-wavepoint_workshop
-├── project_3_bronze     20 raw tables + raw_data volume (31 PDFs)
-├── project_3_silver     24 cleaned tables + article_parsed / article_chunks
-└── project_3_gold       8 business aggregates
-```
-
-## Getting Started
-
-Work the projects in order — each depends on the one before.
-
-1. **[Project 0](./0_Setup/)** — connect and verify. Do not skip the verification
-2. **[Project 1](./1_Medallion/)** — build the medallion layers
-3. **[Project 2](./2_RAG/)** — index the documents *(watch the endpoint billing)*
-4. **[Project 3](./3_Genie/)** — build the Genie agent
-5. **[Project 4](./4_Supervisor/)** — supervisor routing *(to do — [#18](https://github.com/wavepoint-build/ai-engineering-workshop/issues/18))*
-6. **[Project 5](./5_Chat_app/)** — chat app over the supervisor *(to do — [#19](https://github.com/wavepoint-build/ai-engineering-workshop/issues/19))*
 
 ## Two Ways to Work
 
