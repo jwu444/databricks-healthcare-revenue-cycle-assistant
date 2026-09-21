@@ -1,8 +1,8 @@
-# Hands-On Project 1: Creating Raw Tables, Load Data and Build Dashboard in Databricks
+# Project 1 · Medallion — Create Raw Tables, Load Data, and Build a Dashboard
 
 ## Overview
 
-This hands-on project guides students through building a complete dental billing analytics platform on Databricks following the **Medallion Architecture**. Students will set up Unity Catalog schemas and volumes, load CSV data into Delta tables, clean and enrich the data in a silver layer, create business aggregates in a gold layer, build an AI/BI dashboard with cross-entity charts, and configure CI/CD with Declarative Automation Bundles.
+This project guides students through building a complete dental billing analytics platform on Databricks following the **Medallion Architecture**. Students will set up Unity Catalog schemas and volumes, load CSV data into Delta tables, clean and enrich the data in a silver layer, create business aggregates in a gold layer, build an AI/BI dashboard with cross-entity charts, and configure CI/CD with Declarative Automation Bundles.
 
 ## Medallion Architecture
 

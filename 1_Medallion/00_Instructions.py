@@ -1,10 +1,10 @@
 # Databricks notebook source
 # DBTITLE 1,Title & Overview
 # MAGIC %md
-# MAGIC # Hands-On Project 1: Create Raw Tables, Load Data and Build Dashboard in Databricks
+# MAGIC # Project 1 · Medallion — Create Raw Tables, Load Data, and Build a Dashboard
 # MAGIC
 # MAGIC ## Overview
-# MAGIC This hands-on project guides you through setting up a data lakehouse following the **Medallion Architecture** and creating raw tables from CSV files in Unity Catalog.
+# MAGIC This project guides you through setting up a data lakehouse following the **Medallion Architecture** and creating raw tables from CSV files in Unity Catalog.
 # MAGIC
 # MAGIC ## Learning Objectives
 # MAGIC - Understand and implement the Medallion Architecture (Bronze, Silver, Gold layers)
@@ -358,7 +358,7 @@ display(dbutils.fs.ls("/Volumes/wavepoint_workshop/project_3_bronze/raw_data/art
 # MAGIC
 # MAGIC ### 7.1 Create All Bronze Tables Using Option 5
 # MAGIC
-# MAGIC For this hands-on project, we'll use **Option 5: Loop All Files Automated** to create all 20 tables at once.
+# MAGIC For this project, we'll use **Option 5: Loop All Files Automated** to create all 20 tables at once.
 # MAGIC
 # MAGIC **Instructions:**
 # MAGIC
@@ -374,7 +374,7 @@ display(dbutils.fs.ls("/Volumes/wavepoint_workshop/project_3_bronze/raw_data/art
 # MAGIC
 # MAGIC 1. Create a new branch: Ask Databricks Assistant "Create a new Git branch called '1_Medallion' and switch to it"
 # MAGIC 2. Check Git status: Ask Databricks Assistant "Show me the Git status of the project-3 repository"
-# MAGIC 3. Commit and push: Ask Databricks Assistant "Commit all changes with message 'Add hands-on project 1: Bronze layer setup' and push to GitHub"
+# MAGIC 3. Commit and push: Ask Databricks Assistant "Commit all changes with message 'Add project 1 (1_Medallion): bronze layer setup' and push to GitHub"
 # MAGIC
 # MAGIC **What to commit:**
 # MAGIC - `1_Medallion/` folder with all 5 notebook files and README.md

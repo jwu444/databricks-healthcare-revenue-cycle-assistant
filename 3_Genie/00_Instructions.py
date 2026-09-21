@@ -1,7 +1,7 @@
 # Databricks notebook source
 # DBTITLE 1,Title & Overview
 # MAGIC %md
-# MAGIC # Hands-On Project 3: Genie Agent over the Dental Delta Tables
+# MAGIC # Project 3 · Genie — Agent over the Dental Delta Tables
 # MAGIC
 # MAGIC ## Overview
 # MAGIC Build a **Genie agent** so a non-technical person — a dental office manager — can ask questions of the
@@ -530,7 +530,7 @@
 # MAGIC
 # MAGIC ```bash
 # MAGIC git add 3_Genie/
-# MAGIC git commit -m "Add hands-on project 3: Genie agent over dental Delta tables"
+# MAGIC git commit -m "Add project 3 (3_Genie): Genie agent over dental Delta tables"
 # MAGIC git push
 # MAGIC ```
 

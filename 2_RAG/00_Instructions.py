@@ -1,10 +1,10 @@
 # Databricks notebook source
 # DBTITLE 1,Title & Overview
 # MAGIC %md
-# MAGIC # Hands-On Project 2: Vector Search Index (RAG) over the Dental Business Documents
+# MAGIC # Project 2 · RAG — Vector Search Index over the Dental Business Documents
 # MAGIC
 # MAGIC ## Overview
-# MAGIC This hands-on project builds a **retrieval index** over 31 dental practice-management PDFs so an LLM can answer
+# MAGIC This project builds a **retrieval index** over 31 dental practice-management PDFs so an LLM can answer
 # MAGIC questions like *"How do you post an EOB in Open Dental?"* or *"What A/R aging buckets should a practice track?"*
 # MAGIC — **with citations back to the source document**.
 # MAGIC
@@ -963,7 +963,7 @@ for q in TEST_QUESTIONS:
 # MAGIC
 # MAGIC ```bash
 # MAGIC git add 2_RAG/
-# MAGIC git commit -m "Add hands-on project 2: vector search index over dental articles"
+# MAGIC git commit -m "Add project 2 (2_RAG): vector search index over dental articles"
 # MAGIC git push
 # MAGIC ```
 # MAGIC

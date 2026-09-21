@@ -1,4 +1,4 @@
-# Hands-On Project 4: Multi-Agent Supervisor over Genie and RAG
+# Project 4 · Supervisor — Multi-Agent Routing over Genie and RAG
 
 > 📋 **Status: not started.** This README is a placeholder. The spec lives in
 > [wavepoint-build/ai-engineering-workshop#18](https://github.com/wavepoint-build/ai-engineering-workshop/issues/18) —

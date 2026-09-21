@@ -1,4 +1,4 @@
-# Hands-On Project 3: Genie Agent over the Dental Delta Tables
+# Project 3 · Genie — Agent over the Dental Delta Tables
 
 ## Overview
 

@@ -1,4 +1,4 @@
-# Hands-On Project 0: Connect Claude Code to Databricks
+# Project 0 · Setup — Connect Claude Code to Databricks
 
 Projects 1–4 all assume a working connection between **your own Databricks workspace** and **Claude Code**. This project builds it, and — more importantly — **proves it works** before anything depends on it.
 
@@ -289,10 +289,11 @@ Verified: authentication, Unity Catalog, SQL execution, serving endpoints, an em
 
 | Project | Builds | Needs from here |
 |---|---|---|
-| **[1](../1_Medallion/)** | Medallion architecture, dashboard, CI/CD | SQL warehouse, Unity Catalog |
-| **[2](../2_RAG/)** | RAG vector index over 31 PDFs | Embedding model, Vector Search API |
-| **[3](../3_Genie/)** | Genie agent over the Delta tables | SQL warehouse, Unity Catalog |
-| **4** | Supervisor routing between 2 and 3 | Serving endpoints |
+| **[1 · Medallion](../1_Medallion/)** | Medallion architecture, dashboard, CI/CD | SQL warehouse, Unity Catalog |
+| **[2 · RAG](../2_RAG/)** | RAG vector index over 31 PDFs | Embedding model, Vector Search API |
+| **[3 · Genie](../3_Genie/)** | Genie agent over the Delta tables | SQL warehouse, Unity Catalog |
+| **[4 · Supervisor](../4_Supervisor/)** | Supervisor routing between 2 and 3 | Serving endpoints |
+| **[5 · Chat app](../5_Chat_app/)** | Chat UI over the supervisor | Serving endpoints, Databricks Apps |
 
 ## Additional Resources
 

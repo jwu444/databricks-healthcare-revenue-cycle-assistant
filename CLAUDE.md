@@ -66,7 +66,7 @@ wavepoint_workshop
 
 ## Every project must land in a bundle
 
-**Hands-on projects 1–5 each add or update Databricks Asset Bundle resources so the work is deployment-ready.** A project is not finished when the notebook runs interactively — it is finished when its resources are declared in `resources/*.yml` and `databricks bundle validate --strict` passes on both targets.
+**Projects 1–5 each add or update Databricks Asset Bundle resources so the work is deployment-ready.** A project is not finished when the notebook runs interactively — it is finished when its resources are declared in `resources/*.yml` and `databricks bundle validate --strict` passes on both targets.
 
 Add resources under `resources/<name>.yml` (included by `databricks.yml` via `include: resources/*.yml`), then:
 

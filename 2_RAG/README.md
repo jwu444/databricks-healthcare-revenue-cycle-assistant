@@ -1,8 +1,8 @@
-# Hands-On Project 2: Vector Search Index (RAG) over the Dental Business Documents
+# Project 2 · RAG — Vector Search Index over the Dental Business Documents
 
 ## Overview
 
-This hands-on project builds a **retrieval index** over 31 dental practice-management PDFs, so an LLM can answer questions like *"How do you post an EOB in Open Dental?"* or *"What A/R aging buckets should a practice track?"* — **with citations back to the source document**.
+This project builds a **retrieval index** over 31 dental practice-management PDFs, so an LLM can answer questions like *"How do you post an EOB in Open Dental?"* or *"What A/R aging buckets should a practice track?"* — **with citations back to the source document**.
 
 Project 1 built the Medallion Architecture over **structured** CSV data. This project covers the other half of a real lakehouse: **unstructured documents**. The same medallion thinking applies — the PDFs are bronze, the parsed and chunked text is silver.
 

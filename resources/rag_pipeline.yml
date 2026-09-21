@@ -1,4 +1,4 @@
-# RAG pipeline resources for hands-on project 2
+# RAG pipeline resources for project 2 (2_RAG)
 # Included by databricks.yml via: include: - resources/*.yml
 #
 # Builds the retrieval index over the 31 dental article PDFs:
