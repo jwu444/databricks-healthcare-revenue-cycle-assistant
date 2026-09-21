@@ -29,7 +29,7 @@ resources:
         - task_key: build_article_chunks
           description: "Parse PDFs, chunk semantically, enable CDF"
           notebook_task:
-            notebook_path: /Workspace/Users/binwu247@gmail.com/project-3/2_RAG/00_Instructions
+            notebook_path: /Workspace/Users/${workspace.current_user.userName}/project-3/2_RAG/00_Instructions
             source: WORKSPACE
             base_parameters:
               catalog: ${var.catalog}

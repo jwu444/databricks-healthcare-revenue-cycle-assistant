@@ -43,14 +43,14 @@ Real ones, not toy ones: claim denials that eat margin, A/R that ages past colle
 
 ## The Six Projects
 
-| # | Project | Builds | Status |
-|---|---|---|---|
-| **0** | [Setup](./0_Setup/) | Claude Code ↔ Databricks connection, verified 7 ways | ✅ Complete |
-| **1** | [Medallion](./1_Medallion/) | Bronze → silver → gold, AI/BI dashboard, CI/CD | ✅ Complete |
-| **2** | [RAG](./2_RAG/) | Vector index over 31 dental PDFs | ✅ Complete |
-| **3** | [Genie](./3_Genie/) | Natural-language → SQL agent over the Delta tables | ✅ Complete |
-| **4** | [Supervisor](./4_Supervisor/) | Multi-agent routing between 2 and 3 | ✅ Complete |
-| **5** | [Chat app](./5_Chat_app/) | Chat UI over the supervisor — in-platform, then full-stack | ✅ Complete |
+| # | Project | Builds |
+|---|---|---|
+| **0** | [Setup](./0_Setup/) | Claude Code ↔ Databricks connection, verified 7 ways |
+| **1** | [Medallion](./1_Medallion/) | Bronze → silver → gold, AI/BI dashboard, CI/CD |
+| **2** | [RAG](./2_RAG/) | Vector index over 31 dental PDFs |
+| **3** | [Genie](./3_Genie/) | Natural-language → SQL agent over the Delta tables |
+| **4** | [Supervisor](./4_Supervisor/) | Multi-agent routing between 2 and 3 |
+| **5** | [Chat app](./5_Chat_app/) | Chat UI over the supervisor — in-platform, then full-stack |
 
 Each project is a numbered folder. Projects 1–3 hold a `00_Instructions.py` notebook and a `README.md`. **Project 0 is README-only** — its steps configure your laptop, and a notebook that lives in the workspace can't tell you how to get access to the workspace. Its verification harness ships as a runnable script instead. **Projects 4 and 5 are scaffolded but not started** — their folders hold a placeholder `README.md` and the link to the issue that specs them.
 

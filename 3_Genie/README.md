@@ -195,7 +195,7 @@ Genie also improved on the supplied examples unprompted, replacing `nullif`-guar
 | Name | `Dental Billing Analyst` |
 | **Space ID** | **`01f1a99230b81b2eb2a86a65b7d1d3a9`** — project 4 attaches this agent to a supervisor |
 | Warehouse | `1479880691331647` (Serverless Starter) |
-| Parent path | `/Workspace/Users/binwu247@gmail.com/genie_spaces` |
+| Parent path | `/Workspace/Users/<your-email>/genie_spaces` |
 | Tables | 10 from `project_3_silver` |
 | Config | [`genie_agent.json`](./genie_agent.json) — 1 text instruction, 6 sample questions, 5 question→SQL examples |
 

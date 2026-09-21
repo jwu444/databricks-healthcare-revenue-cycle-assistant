@@ -1,8 +1,8 @@
 # Project 4 · Supervisor — Multi-Agent Routing over Genie and RAG
 
 > 📋 **Status: not started.** This README is a placeholder. The spec lives in
-> [wavepoint-build/ai-engineering-workshop#18](https://github.com/wavepoint-build/ai-engineering-workshop/issues/18) —
-> read the issue before starting.
+> `wavepoint-build/ai-engineering-workshop#18` (private repo) — read the issue
+> before starting.
 
 ## Overview
 
@@ -38,7 +38,7 @@ Project 3's Genie agent answers *"what is our denial rate by payer?"* Project 2'
 | Vector index `article_chunks_index` | [Project 2](../2_RAG/) | **Torn down** — rebuild via project 2 Steps 7–9 (~30 min) |
 | Silver tables | [Project 1](../1_Medallion/) | Live |
 
-⚠️ Rebuilding the project-2 index stands up a **Vector Search endpoint, which bills continuously until deleted.** See the cost section in the [root README](../README.md).
+⚠️ Rebuilding the project-2 index stands up a **Vector Search endpoint, which bills continuously until deleted.** See the cost section in [`CLAUDE.md`](../CLAUDE.md).
 
 ## Design questions to settle first
 

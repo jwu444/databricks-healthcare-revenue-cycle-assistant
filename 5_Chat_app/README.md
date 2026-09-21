@@ -1,8 +1,8 @@
 # Project 5 · Chat App — UI over the Supervisor
 
 > 📋 **Status: not started.** This README is a placeholder. The spec lives in
-> [wavepoint-build/ai-engineering-workshop#19](https://github.com/wavepoint-build/ai-engineering-workshop/issues/19) —
-> read the issue before starting.
+> `wavepoint-build/ai-engineering-workshop#19` (private repo) — read the issue
+> before starting.
 
 ## Overview
 

@@ -192,7 +192,7 @@ print("✓ Created sub-directories: data/ and articles/")
 import os
 
 # Source: Git folder workspace path (adjust YOUR_EMAIL)
-YOUR_EMAIL = "binwu247@gmail.com"
+YOUR_EMAIL = "you@example.com"
 CATALOG = "wavepoint_workshop"
 PROJECT = "project_3"
 

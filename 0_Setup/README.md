@@ -198,7 +198,7 @@ Captured from a live run while writing this:
 ```
      CHECK               NEEDED BY  DETAIL
 --------------------------------------------------------------------------------------------
-PASS  Authentication      all        binwu247@gmail.com
+PASS  Authentication      all        you@example.com
 PASS  Unity Catalog read  1,2,3      4 catalog(s): workspace, system, samples, wavepoint_workshop
 PASS  SQL warehouse       1,2,3      Serverless Starter Warehouse [State.STOPPING]
 PASS  SQL execution       1,2,3      query returned 1 on Serverless Starter Warehouse
@@ -215,7 +215,7 @@ End-to-end test via databricks-gte-large-en ...
 Connection is ready for projects 1-4.
 ```
 
-**Vector Search reporting 0 endpoints is a PASS** — the API answering is what's being tested. An endpoint would bill continuously; see the [root README](../README.md).
+**Vector Search reporting 0 endpoints is a PASS** — the API answering is what's being tested. An endpoint would bill continuously; see the cost section in [`CLAUDE.md`](../CLAUDE.md).
 
 A failure here is **useful**. It's far cheaper to find now than three steps into project 2.
 

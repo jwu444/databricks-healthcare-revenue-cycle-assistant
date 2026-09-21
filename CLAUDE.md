@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A six-part Databricks workshop building **an AI operations assistant for a multi-location dental practice** (appointments, billing, financials). Each project is a top-level folder named `<N>_<Topic>` — `0_Setup`, `1_Medallion`, `2_RAG`, `3_Genie`, `4_Supervisor`, `5_Chat_app` — and corresponds to an issue in the separate `wavepoint-build/ai-engineering-workshop` repo (`#15`=1, `#16`=2, `#17`=3, `#18`=4, `#19`=5). Read the issue before starting a project — it is the spec.
+A six-part Databricks workshop building **an AI operations assistant for a multi-location dental practice** (appointments, billing, financials). Each project is a top-level folder named `<N>_<Topic>` — `0_Setup`, `1_Medallion`, `2_RAG`, `3_Genie`, `4_Supervisor`, `5_Chat_app` — and corresponds to an issue in the separate `wavepoint-build/ai-engineering-workshop` repo (private) (`#15`=1, `#16`=2, `#17`=3, `#18`=4, `#19`=5). Read the issue before starting a project — it is the spec.
 
 The whole architecture follows from one split: **structured data** (20 Delta tables) answers *"what happened in our practice?"*, **unstructured documents** (31 PDFs) answer *"how is this work done?"*. Neither answers the other's questions, and project 4's supervisor routes between them. The root `README.md` covers this in full.
 
