@@ -172,9 +172,9 @@ Both must report the **same user**. If they disagree, you have two credential so
 `current-user me` proves your credentials are valid. It does **not** prove you can run a query, reach a model, or read Unity Catalog — and those are what projects 1–4 actually need.
 
 ```bash
-python hands_on_project_0/verify_connection.py
-python hands_on_project_0/verify_connection.py --profile DEFAULT     # explicit profile
-python hands_on_project_0/verify_connection.py --skip-end-to-end     # no model call
+python 0_Setup/verify_connection.py
+python 0_Setup/verify_connection.py --profile DEFAULT     # explicit profile
+python 0_Setup/verify_connection.py --skip-end-to-end     # no model call
 ```
 
 Seven independent checks, each labelled with the project that needs it, so a failure names the **broken capability** rather than just "something is wrong". Exit code is 0 on success, 1 otherwise, so it works in CI.
@@ -289,9 +289,9 @@ Verified: authentication, Unity Catalog, SQL execution, serving endpoints, an em
 
 | Project | Builds | Needs from here |
 |---|---|---|
-| **[1](../hands_on_project_1/)** | Medallion architecture, dashboard, CI/CD | SQL warehouse, Unity Catalog |
-| **[2](../hands_on_project_2/)** | RAG vector index over 31 PDFs | Embedding model, Vector Search API |
-| **[3](../hands_on_project_3/)** | Genie agent over the Delta tables | SQL warehouse, Unity Catalog |
+| **[1](../1_Medallion/)** | Medallion architecture, dashboard, CI/CD | SQL warehouse, Unity Catalog |
+| **[2](../2_RAG/)** | RAG vector index over 31 PDFs | Embedding model, Vector Search API |
+| **[3](../3_Genie/)** | Genie agent over the Delta tables | SQL warehouse, Unity Catalog |
 | **4** | Supervisor routing between 2 and 3 | Serving endpoints |
 
 ## Additional Resources

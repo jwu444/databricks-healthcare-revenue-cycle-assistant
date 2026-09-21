@@ -512,7 +512,7 @@
 # MAGIC
 # MAGIC ```bash
 # MAGIC databricks genie get-space <SPACE_ID> --include-serialized-space -o json --profile DEFAULT \
-# MAGIC   | jq '.serialized_space | fromjson' > hands_on_project_3/genie_agent.json
+# MAGIC   | jq '.serialized_space | fromjson' > 3_Genie/genie_agent.json
 # MAGIC ```
 # MAGIC
 # MAGIC `fromjson` unwraps the string blob into a real object, so the committed file is readable and diffable.
@@ -521,7 +521,7 @@
 # MAGIC
 # MAGIC - [ ] The agent answers **at least 7 of 8** test questions correctly
 # MAGIC - [ ] The **benefit-year trap** is answered correctly, or the agent states which definition it used
-# MAGIC - [ ] `genie_agent.json` exported and committed under `hands_on_project_3/`
+# MAGIC - [ ] `genie_agent.json` exported and committed under `3_Genie/`
 # MAGIC - [ ] `README.md` carries the **question → verdict → fix** table and the **value inventory**
 # MAGIC - [ ] You can explain in one paragraph *why metadata quality drives Genie accuracy more than model choice*
 # MAGIC - [ ] **Space id recorded** — project 4 attaches this agent to a supervisor
@@ -529,7 +529,7 @@
 # MAGIC ### 12.3 Commit
 # MAGIC
 # MAGIC ```bash
-# MAGIC git add hands_on_project_3/
+# MAGIC git add 3_Genie/
 # MAGIC git commit -m "Add hands-on project 3: Genie agent over dental Delta tables"
 # MAGIC git push
 # MAGIC ```

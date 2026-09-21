@@ -372,12 +372,12 @@ display(dbutils.fs.ls("/Volumes/wavepoint_workshop/project_3_bronze/raw_data/art
 # MAGIC
 # MAGIC Once you've created the tables, commit your work to version control.
 # MAGIC
-# MAGIC 1. Create a new branch: Ask Databricks Assistant "Create a new Git branch called 'hands_on_project_1' and switch to it"
+# MAGIC 1. Create a new branch: Ask Databricks Assistant "Create a new Git branch called '1_Medallion' and switch to it"
 # MAGIC 2. Check Git status: Ask Databricks Assistant "Show me the Git status of the project-3 repository"
 # MAGIC 3. Commit and push: Ask Databricks Assistant "Commit all changes with message 'Add hands-on project 1: Bronze layer setup' and push to GitHub"
 # MAGIC
 # MAGIC **What to commit:**
-# MAGIC - `hands_on_project_1/` folder with all 5 notebook files and README.md
+# MAGIC - `1_Medallion/` folder with all 5 notebook files and README.md
 # MAGIC - Any additional files you created
 # MAGIC
 # MAGIC **Why use version control?**
@@ -744,7 +744,7 @@ display(dbutils.fs.ls("/Volumes/wavepoint_workshop/project_3_bronze/raw_data/art
 # MAGIC       deploy.yml                  # GitHub Actions CI/CD pipeline
 # MAGIC   dashboards/
 # MAGIC     dental_billing.lvdash.json   # Exported dashboard JSON
-# MAGIC   hands_on_project_1/
+# MAGIC   1_Medallion/
 # MAGIC     README.md
 # MAGIC     00_Instructions.py           # This notebook
 # MAGIC     Step_5_01_SQL_CREATE_TABLE.ipynb

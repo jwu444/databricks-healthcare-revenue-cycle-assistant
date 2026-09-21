@@ -4,18 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A six-part Databricks workshop building **an AI operations assistant for a multi-location dental practice** (appointments, billing, financials). Each `hands_on_project_N/` folder corresponds to an issue in the separate `wavepoint-build/ai-engineering-workshop` repo (`#15`=1, `#16`=2, `#17`=3, `#18`=4, `#19`=5). Read the issue before starting a project — it is the spec.
+A six-part Databricks workshop building **an AI operations assistant for a multi-location dental practice** (appointments, billing, financials). Each project is a top-level folder named `<N>_<Topic>` — `0_Setup`, `1_Medallion`, `2_RAG`, `3_Genie`, `4_Supervisor`, `5_Chat_app` — and corresponds to an issue in the separate `wavepoint-build/ai-engineering-workshop` repo (`#15`=1, `#16`=2, `#17`=3, `#18`=4, `#19`=5). Read the issue before starting a project — it is the spec.
 
 The whole architecture follows from one split: **structured data** (20 Delta tables) answers *"what happened in our practice?"*, **unstructured documents** (31 PDFs) answer *"how is this work done?"*. Neither answers the other's questions, and project 4's supervisor routes between them. The root `README.md` covers this in full.
 
-| Project | Builds | State |
+| Folder | Builds | State |
 |---|---|---|
-| 0 | Claude Code ↔ Databricks connection | Done — **README-only, no notebook** (see below) |
-| 1 | Medallion bronze→silver→gold, dashboard, CI/CD | Done |
-| 2 | Vector index over the 31 PDFs (RAG) | Done — index **torn down**, rebuildable |
-| 3 | Genie agent over the silver tables | Done — agent live, `01f1a99230b81b2eb2a86a65b7d1d3a9` |
-| 4 | Multi-agent supervisor | To do |
-| 5 | Chat app (Databricks App; React/FastAPI/Postgres) | To do |
+| `0_Setup` | Claude Code ↔ Databricks connection | Done — **README-only, no notebook** (see below) |
+| `1_Medallion` | Medallion bronze→silver→gold, dashboard, CI/CD | Done |
+| `2_RAG` | Vector index over the 31 PDFs (RAG) | Done — index **torn down**, rebuildable |
+| `3_Genie` | Genie agent over the silver tables | Done — agent live, `01f1a99230b81b2eb2a86a65b7d1d3a9` |
+| `4_Supervisor` | Multi-agent supervisor | To do — folder holds a placeholder README only |
+| `5_Chat_app` | Chat app (Databricks App; React/FastAPI/Postgres) | To do — folder holds a placeholder README only |
 
 ## Commands
 
@@ -30,8 +30,8 @@ cd doc && python3 validate_dental_data.py
 cd doc && python3 generate_dental_data.py
 
 # Verify the workspace connection — 7 capability checks + a live embedding call
-python hands_on_project_0/verify_connection.py --profile DEFAULT
-python hands_on_project_0/verify_connection.py --skip-end-to-end   # no model call
+python 0_Setup/verify_connection.py --profile DEFAULT
+python 0_Setup/verify_connection.py --skip-end-to-end   # no model call
 
 # Bundle
 databricks bundle validate --strict --target dev --profile DEFAULT
@@ -103,6 +103,8 @@ Projects 1–3 ship `00_Instructions.py` in **Databricks source format**, not Ju
 
 Every cell gets a `DBTITLE`. Markdown cells use `# MAGIC %md`, SQL cells `# MAGIC %sql`, Python cells are plain. When editing, verify structure holds — split on `\n# COMMAND ----------\n`, confirm each cell has a `DBTITLE`, and `ast.parse` the Python cells.
 
+**Projects 4 and 5 are folders with a placeholder `README.md` and nothing else** — each links the issue that specs it. Adding the notebook is part of doing the project.
+
 **Project 0 is deliberately README-only.** Its steps configure the laptop, and a notebook that lives in the workspace cannot tell you how to get access to the workspace. Its verification harness is a runnable script instead. Do not "fix" this by adding a notebook.
 
 ## Gotchas discovered the hard way
@@ -119,7 +121,7 @@ These cost real time. They are documented in the project READMEs too, but worth 
 
 **`SHOW FUNCTIONS` does not list every built-in.** `ai_prep_search` is absent from `SHOW FUNCTIONS LIKE 'ai_p*'` but works. To test availability, *call* it — a complaint about the argument means it exists; `UNRESOLVED_ROUTINE` means it does not.
 
-**`git checkout <name>` is ambiguous here** because branch names match directory names (`hands_on_project_2`). Use `git switch`.
+**`git checkout <name>` is ambiguous here** because branch names match directory names (`2_RAG`). Use `git switch`.
 
 **Benefit years run Sep 1 → Aug 31**, not calendar years, and `patient_benefit_years` has no date columns to join on — the rule must be written into SQL. Data spans exactly `2023-09-01` → `2026-08-31`.
 
@@ -135,7 +137,7 @@ Teardown is cheap because the expensive work is durable in Delta — `article_pa
 
 ## Git
 
-Branch per project (`hands_on_project_N`), merge to `main` with `--no-ff` so each project stays a visible unit. `main` is the default branch. Remote branch deletion is blocked by the permission classifier — hand the user the command rather than working around it.
+Branch per project, named after the folder (`2_RAG`, `4_Supervisor`), merge to `main` with `--no-ff` so each project stays a visible unit. `main` is the default branch. Remote branch deletion is blocked by the permission classifier — hand the user the command rather than working around it.
 
 ## Verify, don't assume
 

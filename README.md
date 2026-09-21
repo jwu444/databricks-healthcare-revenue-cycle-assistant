@@ -45,21 +45,21 @@ Real ones, not toy ones: claim denials that eat margin, A/R that ages past colle
 
 | # | Project | Builds | Status |
 |---|---|---|---|
-| **0** | [Setup](./hands_on_project_0/) | Claude Code ↔ Databricks connection, verified 7 ways | ✅ Complete |
-| **1** | [Medallion](./hands_on_project_1/) | Bronze → silver → gold, AI/BI dashboard, CI/CD | ✅ Complete |
-| **2** | [RAG](./hands_on_project_2/) | Vector index over 31 dental PDFs | ✅ Complete |
-| **3** | [Genie](./hands_on_project_3/) | Natural-language → SQL agent over the Delta tables | ✅ Complete |
-| **4** | Supervisor | Multi-agent routing between 2 and 3 | 📋 **To do** — [#18](https://github.com/wavepoint-build/ai-engineering-workshop/issues/18) |
-| **5** | Chat app | Chat UI over the supervisor — in-platform, then full-stack | 📋 **To do** — [#19](https://github.com/wavepoint-build/ai-engineering-workshop/issues/19) |
+| **0** | [Setup](./0_Setup/) | Claude Code ↔ Databricks connection, verified 7 ways | ✅ Complete |
+| **1** | [Medallion](./1_Medallion/) | Bronze → silver → gold, AI/BI dashboard, CI/CD | ✅ Complete |
+| **2** | [RAG](./2_RAG/) | Vector index over 31 dental PDFs | ✅ Complete |
+| **3** | [Genie](./3_Genie/) | Natural-language → SQL agent over the Delta tables | ✅ Complete |
+| **4** | [Supervisor](./4_Supervisor/) | Multi-agent routing between 2 and 3 | 📋 **To do** — [#18](https://github.com/wavepoint-build/ai-engineering-workshop/issues/18) |
+| **5** | [Chat app](./5_Chat_app/) | Chat UI over the supervisor — in-platform, then full-stack | 📋 **To do** — [#19](https://github.com/wavepoint-build/ai-engineering-workshop/issues/19) |
 
-Projects 1–3 each hold a `00_Instructions.py` notebook and a `README.md`. **Project 0 is README-only** — its steps configure your laptop, and a notebook that lives in the workspace can't tell you how to get access to the workspace. Its verification harness ships as a runnable script instead.
+Each project is a numbered folder. Projects 1–3 hold a `00_Instructions.py` notebook and a `README.md`. **Project 0 is README-only** — its steps configure your laptop, and a notebook that lives in the workspace can't tell you how to get access to the workspace. Its verification harness ships as a runnable script instead. **Projects 4 and 5 are scaffolded but not started** — their folders hold a placeholder `README.md` and the link to the issue that specs them.
 
 ### 0 · Setup — connect Claude Code to Databricks
 
 Installs the CLI and Python SDK, authenticates, installs Databricks' own Claude Code skills, then **proves the connection works**:
 
 ```bash
-python hands_on_project_0/verify_connection.py
+python 0_Setup/verify_connection.py
 ```
 
 Seven independent capability checks — authentication, Unity Catalog, warehouse, SQL execution, serving endpoints, an embedding model, the Vector Search API — each labelled with the project that needs it, plus a real 1024-dim embedding call. Exits non-zero on failure, so it works in CI.
@@ -89,11 +89,11 @@ A `Dental Billing Analyst` agent over 10 silver tables, answering in plain Engli
 
 Silver/gold rather than bronze, on evidence: **0 of 20 bronze tables carry a comment**, versus 22 of 24 silver and 8 of 8 gold.
 
-### 4 · Supervisor — *to do* ([#18](https://github.com/wavepoint-build/ai-engineering-workshop/issues/18))
+### 4 · [Supervisor](./4_Supervisor/) — *to do* ([#18](https://github.com/wavepoint-build/ai-engineering-workshop/issues/18))
 
 Put a supervisor in front of both agents so one assistant handles the office manager's whole day. The routing problem is already characterised by projects 2 and 3: each declined the other's question correctly and independently. Project 3's Genie agent id — `01f1a99230b81b2eb2a86a65b7d1d3a9` — is recorded for attachment.
 
-### 5 · Chat app — *to do* ([#19](https://github.com/wavepoint-build/ai-engineering-workshop/issues/19))
+### 5 · [Chat app](./5_Chat_app/) — *to do* ([#19](https://github.com/wavepoint-build/ai-engineering-workshop/issues/19))
 
 A chat UI in front of the supervisor, so the office manager talks to **one** assistant rather than choosing between a Genie agent and a vector index. Built twice, on both sides of the platform boundary:
 
@@ -183,10 +183,12 @@ Project 2's `resources/rag_pipeline.yml` declares the ingest job but leaves the 
 ## Repository Layout
 
 ```
-hands_on_project_0/    Setup: Claude Code <-> Databricks (README + verify script)
-hands_on_project_1/    Medallion: bronze -> silver -> gold, dashboard, CI/CD
-hands_on_project_2/    RAG: PDFs -> semantic chunks -> vector index
-hands_on_project_3/    Genie: natural language -> SQL agent
+0_Setup/               Claude Code <-> Databricks connection (README + verify script)
+1_Medallion/           Medallion: bronze -> silver -> gold, dashboard, CI/CD
+2_RAG/                 RAG: PDFs -> semantic chunks -> vector index
+3_Genie/               Genie: natural language -> SQL agent
+4_Supervisor/          Multi-agent supervisor routing 2 and 3   (placeholder)
+5_Chat_app/            Chat UI over the supervisor              (placeholder)
 dashboards/            AI/BI dashboard (dental_billing.lvdash.json)
 resources/             DABs resource definitions
 doc/
@@ -209,12 +211,12 @@ wavepoint_workshop
 
 Work the projects in order — each depends on the one before.
 
-1. **[Project 0](./hands_on_project_0/)** — connect and verify. Do not skip the verification
-2. **[Project 1](./hands_on_project_1/)** — build the medallion layers
-3. **[Project 2](./hands_on_project_2/)** — index the documents *(watch the endpoint billing)*
-4. **[Project 3](./hands_on_project_3/)** — build the Genie agent
-5. **[Project 4](https://github.com/wavepoint-build/ai-engineering-workshop/issues/18)** — supervisor routing *(to do)*
-6. **[Project 5](https://github.com/wavepoint-build/ai-engineering-workshop/issues/19)** — chat app over the supervisor *(to do)*
+1. **[Project 0](./0_Setup/)** — connect and verify. Do not skip the verification
+2. **[Project 1](./1_Medallion/)** — build the medallion layers
+3. **[Project 2](./2_RAG/)** — index the documents *(watch the endpoint billing)*
+4. **[Project 3](./3_Genie/)** — build the Genie agent
+5. **[Project 4](./4_Supervisor/)** — supervisor routing *(to do — [#18](https://github.com/wavepoint-build/ai-engineering-workshop/issues/18))*
+6. **[Project 5](./5_Chat_app/)** — chat app over the supervisor *(to do — [#19](https://github.com/wavepoint-build/ai-engineering-workshop/issues/19))*
 
 ## Two Ways to Work
 

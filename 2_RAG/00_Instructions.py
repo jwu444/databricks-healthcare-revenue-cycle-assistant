@@ -957,12 +957,12 @@ for q in TEST_QUESTIONS:
 # MAGIC - [ ] Each Playground answer traces back to a real source document you can name
 # MAGIC - [ ] One retrieval failure written down, with a reason
 # MAGIC - [ ] One vendor-marketing chunk noted
-# MAGIC - [ ] This notebook committed under `hands_on_project_2/`
+# MAGIC - [ ] This notebook committed under `2_RAG/`
 # MAGIC
 # MAGIC ### 12.3 Commit
 # MAGIC
 # MAGIC ```bash
-# MAGIC git add hands_on_project_2/
+# MAGIC git add 2_RAG/
 # MAGIC git commit -m "Add hands-on project 2: vector search index over dental articles"
 # MAGIC git push
 # MAGIC ```

@@ -3,8 +3,8 @@
 
 Run this on your own machine after completing the setup steps in README.md:
 
-    python hands_on_project_0/verify_connection.py
-    python hands_on_project_0/verify_connection.py --profile DEFAULT
+    python 0_Setup/verify_connection.py
+    python 0_Setup/verify_connection.py --profile DEFAULT
 
 `databricks current-user me` proves your credentials are valid. It does NOT
 prove you can run a query, reach a model, or read Unity Catalog -- and those

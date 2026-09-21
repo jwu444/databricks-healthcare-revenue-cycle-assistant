@@ -30,7 +30,7 @@ resources:
         - task_key: load_bronze_tables
           description: "Run the automated bronze loader notebook"
           notebook_task:
-            notebook_path: /Workspace/Users/binwu247@gmail.com/project-3/hands_on_project_1/Step_5_05_Loop_All_Files_Automated
+            notebook_path: /Workspace/Users/binwu247@gmail.com/project-3/1_Medallion/Step_5_05_Loop_All_Files_Automated
             source: WORKSPACE
           job_cluster_key: job_cluster
       job_clusters:
@@ -53,7 +53,7 @@ resources:
         - task_key: build_silver_tables
           description: "Run the silver layer cleaning notebook"
           notebook_task:
-            notebook_path: /Workspace/Users/binwu247@gmail.com/project-3/hands_on_project_1/Step_8_Silver_Layer_Cleaning
+            notebook_path: /Workspace/Users/binwu247@gmail.com/project-3/1_Medallion/Step_8_Silver_Layer_Cleaning
             source: WORKSPACE
           job_cluster_key: job_cluster
       job_clusters:
@@ -76,7 +76,7 @@ resources:
         - task_key: build_gold_tables
           description: "Run the gold layer analytics notebook"
           notebook_task:
-            notebook_path: /Workspace/Users/binwu247@gmail.com/project-3/hands_on_project_1/Step_9_Gold_Layer_Analytics
+            notebook_path: /Workspace/Users/binwu247@gmail.com/project-3/1_Medallion/Step_9_Gold_Layer_Analytics
             source: WORKSPACE
           job_cluster_key: job_cluster
       job_clusters:
