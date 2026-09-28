@@ -1,9 +1,5 @@
 # Project 4 · Supervisor — Multi-Agent Routing over Genie and RAG
 
-> 📋 **Status: not started.** This README is a placeholder. The spec lives in
-> `wavepoint-build/ai-engineering-workshop#18` (private repo) — read the issue
-> before starting.
-
 ## Overview
 
 Put a **supervisor agent** in front of the two agents built so far, so the office manager talks to one assistant instead of choosing a tool.
@@ -37,14 +33,6 @@ Project 3's Genie agent answers *"what is our denial rate by payer?"* Project 2'
 | Genie agent `01f1a99230b81b2eb2a86a65b7d1d3a9` | [Project 3](../3_Genie/) | Live |
 | Vector index `article_chunks_index` | [Project 2](../2_RAG/) | **Torn down** — rebuild via project 2 Steps 7–9 (~30 min) |
 | Silver tables | [Project 1](../1_Medallion/) | Live |
-
-⚠️ Rebuilding the project-2 index stands up a **Vector Search endpoint, which bills continuously until deleted.** See the cost section in [`CLAUDE.md`](../CLAUDE.md).
-
-## Design questions to settle first
-
-- **Routing on decline vs. routing up front** — does the supervisor classify the question, or try one agent and fall back?
-- **What provenance survives the hop?** A data answer should carry its SQL, a document answer its source document. The supervisor must not flatten either.
-- **What does it do with a question neither agent can answer?** Projects 2 and 3 both decline honestly; the supervisor has to preserve that rather than synthesize an answer.
 
 ## Additional Resources
 
