@@ -30,8 +30,8 @@ Project 3's Genie agent answers *"what is our denial rate by payer?"* Project 2'
 
 | Need | From | Note |
 |---|---|---|
-| Genie agent `01f1a99230b81b2eb2a86a65b7d1d3a9` | [Project 3](../3_Genie/) | Live |
-| Vector index `article_chunks_index` | [Project 2](../2_RAG/) | **Torn down** — rebuild via project 2 Steps 7–9 (~30 min) |
+| Genie agent | [Project 3](../3_Genie/) | Live |
+| Vector index | [Project 2](../2_RAG/) | **Torn down** — rebuild via project 2 Steps 7–9 (~30 min) |
 | Silver tables | [Project 1](../1_Medallion/) | Live |
 
 ## Additional Resources
