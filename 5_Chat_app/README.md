@@ -12,7 +12,7 @@ A chat UI in front of project 4's supervisor, so the office manager talks to **o
 
 | Need | From | Note |
 |---|---|---|
-| Supervisor serving endpoint | [4_Supervisor](../4_Supervisor/) | **Not built yet — blocks this project** |
+| Supervisor serving endpoint | [4_Supervisor](../4_Supervisor/) | Built in Databricks Agents |
 | Genie agent + vector index | [3_Genie](../3_Genie/) and [2_RAG](../2_RAG/) | Reached only through the supervisor |
 
 ## Additional Resources
