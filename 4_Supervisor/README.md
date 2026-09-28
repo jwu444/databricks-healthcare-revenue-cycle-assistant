@@ -15,8 +15,8 @@ Project 3's Genie agent answers *"what is our denial rate by payer?"* Project 2'
                 ┌──────────────────┴──────────────────┐
                 ▼                                     ▼
      "what do our numbers say?"            "how is this done?"
-     Genie agent  (project 3)              Vector index  (project 2)
-     01f1a99230b81b2eb2a86a65b7d1d3a9      article_chunks_index
+     Genie agent.                          Vector index  (project 2)
+     
 ```
 
 ## What this project will build
