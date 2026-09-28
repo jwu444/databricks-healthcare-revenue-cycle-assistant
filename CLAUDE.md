@@ -13,7 +13,7 @@ The whole architecture follows from one split: **structured data** (20 Delta tab
 | `0_Setup` | Claude Code ↔ Databricks connection | Done — **README-only, no notebook** (see below) |
 | `1_Medallion` | Medallion bronze→silver→gold, dashboard, CI/CD | Done |
 | `2_RAG` | Vector index over the 31 PDFs (RAG) | Done — index **torn down**, rebuildable |
-| `3_Genie` | Genie agent over the silver tables | Done — agent live, `01f1a99230b81b2eb2a86a65b7d1d3a9` |
+| `3_Genie` | Genie agent over the silver tables | Done — agent live, space ID `<your_genie_space_id>` |
 | `4_Supervisor` | Multi-agent supervisor | To do — folder holds a placeholder README only |
 | `5_Chat_app` | Chat app (Databricks App; React/FastAPI/Postgres) | To do — folder holds a placeholder README only |
 
@@ -60,7 +60,7 @@ wavepoint_workshop
 └── project_3_gold      8 business aggregates
 ```
 
-**Naming:** underscores in catalog/schema/table names — hyphens cause SQL parse errors and need backtick escaping. The one exception is the Vector Search endpoint name (`wavepoint-vs`), which is not a SQL identifier.
+**Naming:** underscores in catalog/schema/table names — hyphens cause SQL parse errors and need backtick escaping. The one exception is the Vector Search endpoint name (`<your_vs_endpoint>`), which is not a SQL identifier.
 
 **Free-tier daily compute limit.** When it is exhausted, *every* query fails with `you have hit your free daily limit`, including `SELECT 1`. That is not a config problem — it resets.
 

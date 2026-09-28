@@ -786,12 +786,12 @@ display(dbutils.fs.ls("/Volumes/wavepoint_workshop/project_3_bronze/raw_data/art
 # MAGIC ```bash
 # MAGIC # Export the Dental Billing Analytics dashboard
 # MAGIC databricks bundle generate dashboard \
-# MAGIC   --id 01f1a9408503107bba3222274c033e58 \
+# MAGIC   --id <your_dashboard_id> \
 # MAGIC   --path ./dashboards/dental_billing.lvdash.json
 # MAGIC
 # MAGIC # Or use watch mode to sync UI edits back to the JSON file
 # MAGIC databricks bundle generate dashboard \
-# MAGIC   --id 01f1a9408503107bba3222274c033e58 \
+# MAGIC   --id <your_dashboard_id> \
 # MAGIC   --path ./dashboards/dental_billing.lvdash.json \
 # MAGIC   --watch
 # MAGIC ```

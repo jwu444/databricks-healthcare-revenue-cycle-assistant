@@ -91,7 +91,7 @@ Silver/gold rather than bronze, on evidence: **0 of 20 bronze tables carry a com
 
 ### 4 · Supervisor
 
-Put a supervisor in front of both agents so one assistant handles the office manager's whole day. The routing problem is already characterised by projects 2 and 3: each declined the other's question correctly and independently. Project 3's Genie agent id — `01f1a99230b81b2eb2a86a65b7d1d3a9` — is recorded for attachment.
+Put a supervisor in front of both agents so one assistant handles the office manager's whole day. The routing problem is already characterised by projects 2 and 3: each declined the other's question correctly and independently. Attach project 3's Genie agent by its space ID, `<your_genie_space_id>`: use the id your own `create-space` call returned in project 3.
 
 ### 5 · Chat app
 
@@ -164,7 +164,7 @@ They are not exclusive — the repo is the shared surface. Committing from eithe
 
 ## Conventions
 
-**Naming** — underscores in catalog, schema, and table names. Hyphens cause SQL parse errors and need backtick escaping. The one exception is the Vector Search endpoint (`wavepoint-vs`), which is not a SQL identifier.
+**Naming** — underscores in catalog, schema, and table names. Hyphens cause SQL parse errors and need backtick escaping. The one exception is the Vector Search endpoint (`<your_vs_endpoint>`), which is not a SQL identifier.
 
 **Data** — fully synthetic, deterministic (seed 42). No PHI, no real patients, no real practices. The 31 PDFs are de-branded: images, logos, company name and copyright removed.
 

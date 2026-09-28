@@ -3,7 +3,7 @@
 #
 # Builds the retrieval index over the 31 dental article PDFs:
 #   volume PDFs -> ai_parse_document -> ai_prep_search -> article_chunks
-#                -> Delta Sync vector index on the wavepoint-vs endpoint
+#                -> Delta Sync vector index on the <your_vs_endpoint> endpoint
 #
 # NOTE ON COMPUTE: this job runs on SERVERLESS, not the classic job_cluster
 # the project-1 jobs use. Those pin DBR 15.4, which is too old here:
@@ -24,7 +24,7 @@ resources:
         project_3_silver.article_chunks with Change Data Feed enabled.
       email_notifications:
         on_failure:
-          - ${DATABRICKS_USER_EMAIL}
+          - ${workspace.current_user.userName}
       tasks:
         - task_key: build_article_chunks
           description: "Parse PDFs, chunk semantically, enable CDF"
@@ -46,17 +46,18 @@ resources:
 #     means any `bundle deploy`, including one triggered by CI on merge,
 #     stands up a billing resource. Decide that deliberately.
 #
-#  2. THESE ALREADY EXIST. wavepoint-vs and article_chunks_index were created
-#     imperatively (CLI/SDK) and are not in bundle state. Deploying them as
-#     bundle resources without importing them first may conflict.
+#  2. THEY MAY ALREADY EXIST. Project 2's notebook creates <your_vs_endpoint>
+#     and article_chunks_index imperatively (CLI/SDK), so they are not in
+#     bundle state. Deploying them as bundle resources without importing them
+#     first may conflict.
 #
 # To adopt them, uncomment and run `bundle deploy` against a target where you
 # accept the billing, or delete the existing pair first and let the bundle own
 # them from the start.
 #
 #   vector_search_endpoints:
-#     wavepoint_vs:
-#       name: wavepoint-vs
+#     vs_endpoint:
+#       name: <your_vs_endpoint>
 #       # STANDARD: 20-50ms queries. STORAGE_OPTIMIZED is ~7x cheaper but
 #       # 300-500ms, and only pays off at 100M+ vectors. 104 chunks here.
 #       endpoint_type: STANDARD
@@ -64,7 +65,7 @@ resources:
 #   vector_search_indexes:
 #     article_chunks_index:
 #       name: ${var.catalog}.project_3_silver.article_chunks_index
-#       endpoint_name: wavepoint-vs
+#       endpoint_name: <your_vs_endpoint>
 #       primary_key: chunk_id
 #       index_type: DELTA_SYNC
 #       delta_sync_index_spec:

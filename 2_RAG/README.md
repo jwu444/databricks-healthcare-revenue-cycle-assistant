@@ -35,7 +35,7 @@ Project 1 built the Medallion Architecture over **structured** CSV data. This pr
     ▼  Delta Sync index, managed embeddings (databricks-gte-large-en)
 ┌─────────────────────────────────────────────────────────────────┐
 │  VECTOR SEARCH — project_3_silver.article_chunks_index          │
-│  Endpoint: wavepoint-vs (STANDARD)                              │
+│  Endpoint: <your_vs_endpoint> (STANDARD)                        │
 │  Each chunk becomes a 1024-dimension vector                     │
 └─────────────────────────────────────────────────────────────────┘
     │
@@ -78,7 +78,7 @@ Open the interactive guide: **[00_Instructions.py](./00_Instructions.py)** — a
 4. **Parse the PDFs to Text** — `ai_parse_document` into `article_parsed`, flattened to `article_pages`
 5. **Chunk the Text into a Silver Table** — semantic chunking with `ai_prep_search`, with a fixed-window fallback
 6. **Enable Change Data Feed** — required for a Delta Sync index; the most common failure point
-7. **Create the Vector Search Endpoint** — one `wavepoint-vs` endpoint, STANDARD type
+7. **Create the Vector Search Endpoint** — one `<your_vs_endpoint>` endpoint, STANDARD type
 8. **Create the Delta Sync Index** — managed embeddings, PK `chunk_id`, embedding source `chunk_to_embed`
 9. **Wait for ONLINE and Verify** — confirm the indexed row count matches the chunk table
 10. **Query the Index** — three test questions, top-5 hits with scores and `doc_uri`
@@ -118,7 +118,7 @@ Both paths write an identical schema, so Steps 6–12 are unchanged either way. 
 
 **A Vector Search endpoint bills for as long as it exists, not just while you query it.**
 
-- Create exactly one endpoint (`wavepoint-vs`) — the notebook reuses an existing one rather than making a second
+- Create exactly one endpoint (`<your_vs_endpoint>`) — the notebook reuses an existing one rather than making a second
 - Pausing for more than a day? Ask before leaving it up
 - Step 12 has the teardown. Deleting the index and endpoint does **not** touch `article_chunks`, so you can rebuild at any time
 
@@ -131,7 +131,7 @@ Parsing also costs one LLM inference per document. `article_parsed` exists so yo
 ✅ Good: `project_3_silver`, `article_chunks`
 ❌ Bad: `project-3-silver`, `article-chunks`
 
-The one exception is the **Vector Search endpoint name** (`wavepoint-vs`). An endpoint is not a SQL identifier, so a hyphen is safe there.
+The one exception is the **Vector Search endpoint name** (`<your_vs_endpoint>`). An endpoint is not a SQL identifier, so a hyphen is safe there.
 
 ## Troubleshooting
 

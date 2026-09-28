@@ -36,7 +36,7 @@
 # MAGIC
 # MAGIC A Vector Search endpoint **bills while it exists, not just while you query it.**
 # MAGIC
-# MAGIC - Create **exactly one** endpoint (`wavepoint-vs`)
+# MAGIC - Create **exactly one** endpoint (`<your_vs_endpoint>`)
 # MAGIC - If you are pausing for more than a day, **ask before leaving it up**
 # MAGIC - Step 12 has the teardown commands — do not skip it when you are done
 # MAGIC
@@ -47,7 +47,7 @@
 # MAGIC ✅ **Good:** `project_3_silver`, `article_chunks`
 # MAGIC ❌ **Bad:** `project-3-silver`, `article-chunks`
 # MAGIC
-# MAGIC The one exception is the **Vector Search endpoint name** (`wavepoint-vs`). An endpoint is not a SQL identifier,
+# MAGIC The one exception is the **Vector Search endpoint name** (`<your_vs_endpoint>`). An endpoint is not a SQL identifier,
 # MAGIC so a hyphen is safe there.
 # MAGIC
 # MAGIC ## Table of Contents
@@ -130,7 +130,7 @@
 # MAGIC
 # MAGIC | Term | Meaning here |
 # MAGIC |---|---|
-# MAGIC | **Endpoint** | The compute that hosts indexes — `wavepoint-vs` |
+# MAGIC | **Endpoint** | The compute that hosts indexes — `<your_vs_endpoint>` |
 # MAGIC | **Index** | The searchable vector structure — `article_chunks_index` |
 # MAGIC | **Delta Sync** | Index auto-syncs from the source Delta table |
 # MAGIC | **Managed embeddings** | Databricks computes the vectors with `databricks-gte-large-en` |
@@ -617,7 +617,7 @@ else:
 # MAGIC
 # MAGIC **An endpoint bills for as long as it exists, whether or not you query it.** It is not serverless-per-query.
 # MAGIC
-# MAGIC - Create **exactly one**: `wavepoint-vs`
+# MAGIC - Create **exactly one**: `<your_vs_endpoint>`
 # MAGIC - Re-run the cell freely — it is written to reuse an existing endpoint, not create a second one
 # MAGIC - Pausing for more than a day? **Ask before leaving it up**, and see the teardown in Step 12
 # MAGIC
@@ -639,7 +639,7 @@ else:
 from databricks.sdk import WorkspaceClient
 from databricks.sdk.errors import ResourceAlreadyExists
 
-ENDPOINT_NAME = "wavepoint-vs"
+ENDPOINT_NAME = "<your_vs_endpoint>"  # replace with your endpoint name
 
 w = WorkspaceClient()
 

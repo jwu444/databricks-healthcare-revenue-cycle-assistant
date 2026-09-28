@@ -5,7 +5,7 @@ resources:
   # AI/BI Dashboard: Dental Billing Analytics
   # Export the dashboard JSON before first deploy:
 #   databricks bundle generate dashboard \
-#     --id 01f1a9408503107bba3222274c033e58 \
+#     --id <your_dashboard_id> \
 #     --path ./dashboards/dental_billing.lvdash.json
   dashboards:
     dental_billing:
@@ -25,7 +25,7 @@ resources:
         pause_status: UNPAUSED
       email_notifications:
         on_failure:
-          - ${DATABRICKS_USER_EMAIL}
+          - ${workspace.current_user.userName}
       tasks:
         - task_key: load_bronze_tables
           description: "Run the automated bronze loader notebook"

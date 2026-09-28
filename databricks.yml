@@ -22,18 +22,18 @@ targets:
   dev:
     default: true
     workspace:
-      host: https://dbc-8871de8a-2714.cloud.databricks.com
+      host: <your_workspace_url>
     variables:
-      warehouse_id: ${DATABRICKS_WAREHOUSE_ID}
+      warehouse_id: <your_warehouse_id>
       catalog: wavepoint_workshop
       schema: project_3_bronze
 
   # Production environment
   prod:
     workspace:
-      host: https://dbc-8871de8a-2714.cloud.databricks.com
+      host: <your_workspace_url>
     variables:
-      warehouse_id: ${DATABRICKS_WAREHOUSE_ID}
+      warehouse_id: <your_warehouse_id>
       catalog: wavepoint_workshop
       schema: project_3_bronze
 
